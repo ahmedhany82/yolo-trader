@@ -14,9 +14,6 @@ export default function Navbar(props) {
     <div>
       <h1>Navbar</h1>
       <ul>
-        <li>
-          <Link to='/'>Home</Link>
-        </li>
         {/* If we have a logged in user -> show projects and logout otherwise show login and signup */}
         {props.user ? (
           <>
