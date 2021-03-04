@@ -67,7 +67,6 @@ router.delete('/logout', (req, res) => {
 
 router.get('/loggedin', (req, res, next) => {
   // this is where passport stores the logged in user
-  res.json("Here we should return a user")
   res.json(req.user);
 });
 
