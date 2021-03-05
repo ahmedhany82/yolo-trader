@@ -9,10 +9,13 @@ export default class StockDetails extends Component {
   state = {
     stock: [],
     labels: [],
-    data: []
+    data: [],
+    ticker: 0
   }
 
   componentDidMount() {
+
+    console.log("Component did mount is called")
     const myChartRef = this.chartRef.current.getContext("2d");
     const ticker = this.props.match.params.ticker;
     
@@ -22,7 +25,7 @@ export default class StockDetails extends Component {
         console.log(err)
     })
 
-    axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/batch?token=${process.env.REACT_APP_KEY}&types=chart,quote&range=1w`).then(response => {
+    axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/batch?token=${process.env.REACT_APP_KEY}&types=chart,quote&range=ytd`).then(response => {
       console.log(response.data.chart)
       let dates = response.data.chart.map(element => {
         return element.date;
@@ -38,30 +41,67 @@ export default class StockDetails extends Component {
         new Chart(myChartRef, {
           type: "line",
           data: {
-              //Bring in data
-              labels: ["2021-02-26", "2021-03-01", "2021-03-02", "2021-03-03", "2021-03-04"],
+              labels: labels,
               datasets: [
                   {
-                      label: "Sales",
-                      data: [678.9, 718.93, 707.49, 658.9, 647.38] //this.state.data,
+                      label: "",
+                      backgroundColor: 'rgb(173,216,230)',
+                      borderColor: 'rgb(230,230,250)',
+                      data: data
                   }
               ]
           },
           options: {
               //Customize chart options
+              hover: {
+                mode: "index",
+                intersect: false,
+              },
+              legend: {
+                display: false,
+              },
           }
         });
       })
     }).catch(err => {
       console.log(err)
     })
-  }
+
+    // const socket = new WebSocket('wss://ws.finnhub.io?token=sandbox_c0uhttn48v6r6g5764cg');
+
+    // socket.addEventListener('open', function (event) {
+    //     socket.send(JSON.stringify({'type':'subscribe', 'symbol': `${ticker}`}))
+    // });
+
+    // socket.addEventListener('message', function (event) {
+    //     JSON.parse(event.data)['data'].map(element => {
+    //       console.log(element.p)
+    //     });
+    // });
+
+    // var unsubscribe = function(symbol) {
+    //   socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}))
+    // }
+
+    // unsubscribe('TSLA')
+
+ }
+
+//  componentWillUnmount() {
+//   socket.send(JSON.stringify({'type':'unsubscribe','symbol': 'TSLA'}));
+// }
 
   render() {
     return (
       <div>
         <h1>This is the StockDetails page</h1> 
         <div>
+          <button>1M</button>
+          <button>1W</button>
+          <button>1D</button>
+          <button>YTD</button>
+        </div>
+        <div style={{width: "70vw", height: "20vh"}}>
             <canvas
                 id="myChart"
                 ref={this.chartRef}
