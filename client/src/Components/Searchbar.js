@@ -14,7 +14,7 @@ export default class Searchbar extends React.Component {
     this.setState({
         query: query
     })
-    axios.get(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${query}&apikey=${process.env.ALPHAVANTAGE_KEY}`).then(response => {
+    axios.get(`https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${query}&apikey=${process.env.REACT_APP_ALPHAVANTAGE_KEY}`).then(response => {
       this.setState({
           tickers: response.data.bestMatches
           })      

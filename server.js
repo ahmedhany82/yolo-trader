@@ -4,5 +4,6 @@ const app = require("./app");
 const PORT = process.env.PORT || 5005;
 
 app.listen(PORT, () => {
+  console.log(`This is the key: ${process.env.REACT_APP_KEY}`)
   console.log(`Server listening on port http://localhost:${PORT}`);
 });
