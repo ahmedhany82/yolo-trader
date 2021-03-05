@@ -18,7 +18,7 @@ export default function Navbar(props) {
         {props.user ? (
           <>
             <li>
-              <Link to='/home'>Home</Link>
+              <Link to='/'>Home</Link>
             </li>
             <li>
               <Link to='/' onClick={() => handleLogout(props)} >Logout</Link>
