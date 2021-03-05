@@ -32,7 +32,7 @@ export default class Login extends Component {
           // we want to put the user object in the state of App.js
           console.log(user)
           this.props.setUser(user);
-          //this.props.history.push('/home');
+          this.props.history.push('/home');
         }
       })
   }
