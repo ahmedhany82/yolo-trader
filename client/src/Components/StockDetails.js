@@ -2,15 +2,25 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Chart from "chart.js";
 
+// const socket = new WebSocket('wss://ws.finnhub.io?token=c0uhttn48v6r6g5764c0');
+
 export default class StockDetails extends Component {
 
   chartRef = React.createRef();
 
   state = {
-    stock: [],
+    symbol: undefined,
+    companyName: undefined,
+    lastPrice: undefined,
     labels: [],
     data: [],
-    ticker: 0
+    week52High: undefined,
+    week52Low: undefined,
+    marketCap: undefined,
+    peRatio: undefined,
+    avgTotalVolume: undefined,
+    ytdChange: undefined,
+    previousClose: undefined
   }
 
   componentDidMount() {
@@ -20,7 +30,19 @@ export default class StockDetails extends Component {
     const ticker = this.props.match.params.ticker;
     
     axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/quote?displayPercent=true&token=${process.env.REACT_APP_KEY}`).then(response => {
-      console.log(response)
+      const data = response.data;
+      this.setState({
+        symbol: data.symbol,
+        companyName: data.companyName,
+        marketCap: data.marketCap,
+        peRatio: data.peRatio,
+        avgTotalVolume: data.avgTotalVolume,
+        ytdChange: data.ytdChange,
+        previousClose: data.previousClose,
+        week52High: data.week52High,
+        week52Low: data.week52Low,
+        webSocket: undefined
+      });
     }).catch(err => {
         console.log(err)
     })
@@ -67,46 +89,61 @@ export default class StockDetails extends Component {
       console.log(err)
     })
 
-    // const socket = new WebSocket('wss://ws.finnhub.io?token=sandbox_c0uhttn48v6r6g5764cg');
+    // const socket = new WebSocket('wss://ws.finnhub.io?token=c0uhttn48v6r6g5764c0');
+    //const socket = new WebSocket('wss://ws.finnhub.io?token=sandbox_c0uhttn48v6r6g5764cg');
+      // socket.addEventListener('open', function (event) {
+      //     socket.send(JSON.stringify({'type':'subscribe', 'symbol': `${ticker}`}))
+      // });
 
-    // socket.addEventListener('open', function (event) {
-    //     socket.send(JSON.stringify({'type':'subscribe', 'symbol': `${ticker}`}))
-    // });
+      // socket.addEventListener('message', event => {
+      //   //check if data is empty
+      //     JSON.parse(event.data)['data'].map(element => {
+      //       // console.log(element.p)
+      //       let price = element.p;
+      //       this.setState({
+      //         lastPrice: price
+      //       });
+      //     });
+      // });
 
-    // socket.addEventListener('message', function (event) {
-    //     JSON.parse(event.data)['data'].map(element => {
-    //       console.log(element.p)
-    //     });
-    // });
+
+
 
     // var unsubscribe = function(symbol) {
     //   socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}))
     // }
-
     // unsubscribe('TSLA')
-
  }
 
-//  componentWillUnmount() {
-//   socket.send(JSON.stringify({'type':'unsubscribe','symbol': 'TSLA'}));
-// }
+  // componentWillUnmount() {
+  //   console.log("component will unmount is called")
+  //   let symbol = this.state.symbol;
+  //   socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}));
+  // }
 
   render() {
     return (
       <div>
-        <h1>This is the StockDetails page</h1> 
-        <div>
-          <button>1M</button>
-          <button>1W</button>
-          <button>1D</button>
-          <button>YTD</button>
-        </div>
-        <div style={{width: "70vw", height: "20vh"}}>
-            <canvas
-                id="myChart"
-                ref={this.chartRef}
-            />
-        </div>
+          <h1>This is the StockDetails page</h1> 
+          <div style={{display:'flex'}}>
+            <div style={{width: "70vw", height: "20vh"}}>
+                <canvas
+                    id="myChart"
+                    ref={this.chartRef}
+                />
+            </div>
+            <div>
+              <button>1M</button>
+              <button>1W</button>
+              <button>1D</button>
+              <button>YTD</button>
+            </div>
+            <div>
+              <h1>{this.state.symbol}</h1>
+              <p>{this.state.companyName}</p>
+              <p>{this.state.lastPrice}</p>
+            </div>
+          </div>
       </div>
     )
   }
