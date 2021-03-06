@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import SearchResults from "./SearchResults";
 import axios from 'axios';
 
 export default class Searchbar extends React.Component {
@@ -31,18 +32,18 @@ export default class Searchbar extends React.Component {
 
 
   render() {
-      let tickersList = this.state.tickers.map(ticker => {
-        return (
-          <div>
-            <Link to={`/symbols/${ticker['1. symbol']}`} ><p>{ticker['1. symbol']}</p></Link>
-            {/* <p>{ticker['1. symbol']}</p> */}
-            <p style={{color: "grey"}}>{ticker['2. name']}</p>
-          </div>
-        )
-      })  
+      // let tickersList = this.state.tickers.map(ticker => {
+      //   return (
+      //     <div>
+      //       <Link to={`/symbols/${ticker['1. symbol']}`} ><p>{ticker['1. symbol']}</p></Link>
+      //       {/* <p>{ticker['1. symbol']}</p> */}
+      //       <p style={{color: "grey"}}>{ticker['2. name']}</p>
+      //     </div>
+      //   )
+      // })  
     return (
       <div>
-        <form style={{width:'100%', marginBottom: '50px'}}>
+        <form style={{width:'100%', marginBottom: '50px'}} autocomplete="off">
           <div className="form-group">
               <label className="ml-3" htmlFor="search"></label>
               <input className="form-control" style={{width:'90%', height: '25px', marginLeft: '20px'}}
@@ -53,11 +54,14 @@ export default class Searchbar extends React.Component {
                 placeholder="Search by Symbol"
                 onChange={this.handleSearch}
               />
+              <SearchResults tickers={this.state.tickers}/>
           </div>
-          </form>
-          <div>
+        </form>
+        
+          {/* <div>
               {tickersList}
-          </div>
+          </div> */}
+        <h1 className="ml-3" style={{position: 'absolute', zIndex: '1'}}>This is a test</h1>
     </div>
     )
 
