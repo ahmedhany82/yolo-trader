@@ -10,6 +10,10 @@ export default class StockDetails extends Component {
   state = {
     symbol: undefined,
     companyName: undefined,
+    change: undefined,
+    latestPrice: undefined,
+    changePercent: undefined,
+    latestTime: undefined,
     lastPrice: undefined, //this is last trade use https://finnhub.io/api/v1/quote?symbol=SPCE&token= for closing price
     labels: [],
     data: [],
@@ -20,8 +24,9 @@ export default class StockDetails extends Component {
     avgTotalVolume: undefined,
     ytdChange: undefined,
     previousClose: undefined,
-    socket: new WebSocket('wss://ws.finnhub.io?token='),
+    socket: new WebSocket(`wss://ws.finnhub.io?token=${process.env.REACT_APP_FINNHUB_KEY}`),
     diff: undefined,
+    chartRange: '1d'
   }
 
   componentDidMount() {
@@ -31,10 +36,16 @@ export default class StockDetails extends Component {
     const ticker = this.props.match.params.ticker;
     
     axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/quote?displayPercent=true&token=${process.env.REACT_APP_KEY}`).then(response => {
+    // axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/quote?displayPercent=true&token=pk_476aa872c5f94e4e847ad136d6ebc2a8`).then(response => {
       const data = response.data;
+      console.log(data)
       this.setState({
         symbol: data.symbol,
         companyName: data.companyName,
+        latestPrice: data.latestPrice,
+        change: data.change,
+        changePercent: data.changePercent.toFixed(2),
+        latestTime: data.latestTime,
         marketCap: data.marketCap,
         peRatio: data.peRatio,
         avgTotalVolume: data.avgTotalVolume,
@@ -48,7 +59,8 @@ export default class StockDetails extends Component {
         console.log(err)
     })
 
-    axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/batch?token=${process.env.REACT_APP_KEY}&types=chart,quote&range=ytd`).then(response => {
+    //call one api, the chart one gets the quote at the end
+    axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/batch?token=${process.env.REACT_APP_KEY}&types=chart,quote&range=${this.state.chartRange}`).then(response => {
       console.log(response.data.chart)
       let dates = response.data.chart.map(element => {
         return element.date;
@@ -140,27 +152,44 @@ export default class StockDetails extends Component {
     alert('The component is going to be unmounted');
   }
 
+  handleChartChange = event => {
+    const range = event.target.name;
+    this.setState({
+      chartRange: range
+    });
+  }
+
   render() {
     return (
       <div>
-          <h1>This is the StockDetails page</h1> 
-          <div style={{display:'flex'}}>
-            <div style={{width: "70vw", height: "20vh"}}>
+          <div className="d-flex flex-column" >
+            <div className="ml-5">
+              <h3 style={{marginBottom: '0px'}}>{this.state.symbol}</h3>
+              <p style={{color:'grey', paddingLeft: "4px", marginBottom: '0px'}}>{this.state.companyName}</p>
+            </div>
+            <div style={{width: '32vw', height: '10vh'}} className="d-flex flex-row justify-content-between align-items-center ml-5">
+              <h1>${this.state.latestPrice}</h1>
+              <div className="d-flex flex-row" style={{width: '21vw'}}>
+                <h4 style={(this.state.change < 0)? {color: 'red', marginRight: '5px'}: {color: 'green', marginRight: '5px'}}>{this.state.change}</h4>
+                <h4 style={(this.state.changePercent < 0)? {color: 'red'}: {color: 'green'}} >({this.state.changePercent}%)</h4>
+              </div>
+            </div>
+            
+          </div>
+          <div style={{width: "70vw"}}>
+          <div className="d-flex justify-content-end">
+            <div style={{width: "15vw"}} class="btn-group me-2" role="group" aria-label="Second group">
+                <button onClick={this.handleChartChange} name="1d" type="button" class="btn btn-secondary">1D</button>
+                <button onClick={this.handleChartChange} name="1w" type="button" class="btn btn-secondary">1W</button>
+                <button onClick={this.handleChartChange} name="1m" type="button" class="btn btn-secondary">1M</button>
+                <button onClick={this.handleChartChange} name="ytd" type="button" class="btn btn-secondary">YTD</button>
+            </div>
+          </div>
+            <div style={{width: "70vw"}}>
                 <canvas
                     id="myChart"
                     ref={this.chartRef}
                 />
-            </div>
-            <div>
-              <button>1M</button>
-              <button>1W</button>
-              <button>1D</button>
-              <button>YTD</button>
-            </div>
-            <div>
-              <h1>{this.state.symbol}</h1>
-              <p>{this.state.companyName}</p>
-              <p>{this.state.lastPrice}</p>
             </div>
           </div>
       </div>
