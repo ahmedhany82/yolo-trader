@@ -11,7 +11,7 @@ export default class StockDetails extends Component {
   state = {
     symbol: undefined,
     companyName: undefined,
-    lastPrice: undefined,
+    lastPrice: undefined, //this is last trade use https://finnhub.io/api/v1/quote?symbol=SPCE&token= for closing price
     labels: [],
     data: [],
     week52High: undefined,
@@ -20,7 +20,9 @@ export default class StockDetails extends Component {
     peRatio: undefined,
     avgTotalVolume: undefined,
     ytdChange: undefined,
-    previousClose: undefined
+    previousClose: undefined,
+    socket: new WebSocket('wss://ws.finnhub.io?token=c0uhttn48v6r6g5764c0'),
+    diff: undefined,
   }
 
   componentDidMount() {
@@ -89,6 +91,23 @@ export default class StockDetails extends Component {
       console.log(err)
     })
 
+    this.state.socket.onopen = () => {
+      this.state.socket.send(JSON.stringify({'type':'subscribe', 'symbol': `${ticker}`}));
+    };
+
+    let difference = this.state.previousClose;
+    this.state.socket.onmessage = event => {
+        if(JSON.parse(event.data)['data'] !== undefined) {
+          JSON.parse(event.data)['data'].map(element => {
+            let price = element.p;
+            this.setState({
+              lastPrice: price,
+              diff: price - this.state.previousClose
+            });
+          });  
+      }
+    };
+
     // const socket = new WebSocket('wss://ws.finnhub.io?token=c0uhttn48v6r6g5764c0');
     //const socket = new WebSocket('wss://ws.finnhub.io?token=sandbox_c0uhttn48v6r6g5764cg');
       // socket.addEventListener('open', function (event) {
@@ -115,11 +134,12 @@ export default class StockDetails extends Component {
     // unsubscribe('TSLA')
  }
 
-  // componentWillUnmount() {
-  //   console.log("component will unmount is called")
-  //   let symbol = this.state.symbol;
-  //   socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}));
-  // }
+  componentWillUnmount() {
+    console.log("component will unmount is called")
+    let symbol = this.state.symbol;
+    this.state.socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}));
+    alert('The component is going to be unmounted');
+  }
 
   render() {
     return (
