@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 axios.get('api/auth/loggedin')

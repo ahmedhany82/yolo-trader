@@ -10,8 +10,8 @@ export default class Home extends Component {
       <div>
         {this.props.user ? (
           <>
-            <h1>A user is currently logged in</h1>
-            <Searchbar/>
+            <h1 className="ml-3">Welcome {this.props.user.username}</h1>
+            <Searchbar user={this.props.user}/>
           </>
         ) : (
             <>

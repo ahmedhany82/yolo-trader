@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Chart from "chart.js";
 
-// const socket = new WebSocket('wss://ws.finnhub.io?token=c0uhttn48v6r6g5764c0');
 
 export default class StockDetails extends Component {
 
@@ -21,7 +20,7 @@ export default class StockDetails extends Component {
     avgTotalVolume: undefined,
     ytdChange: undefined,
     previousClose: undefined,
-    socket: new WebSocket('wss://ws.finnhub.io?token=c0uhttn48v6r6g5764c0'),
+    socket: new WebSocket('wss://ws.finnhub.io?token='),
     diff: undefined,
   }
 
@@ -108,8 +107,8 @@ export default class StockDetails extends Component {
       }
     };
 
-    // const socket = new WebSocket('wss://ws.finnhub.io?token=c0uhttn48v6r6g5764c0');
-    //const socket = new WebSocket('wss://ws.finnhub.io?token=sandbox_c0uhttn48v6r6g5764cg');
+    // const socket = new WebSocket('wss://ws.finnhub.io?token=');
+    //const socket = new WebSocket('wss://ws.finnhub.io?token=');
       // socket.addEventListener('open', function (event) {
       //     socket.send(JSON.stringify({'type':'subscribe', 'symbol': `${ticker}`}))
       // });

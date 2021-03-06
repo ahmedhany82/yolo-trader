@@ -42,15 +42,15 @@ export default class Searchbar extends React.Component {
       })  
     return (
       <div>
-      <h1>This is the Search Bar</h1>
         <form style={{width:'100%', marginBottom: '50px'}}>
           <div className="form-group">
-              <label className="ml-3" htmlFor="search">Search By Symbol</label>
+              <label className="ml-3" htmlFor="search"></label>
               <input className="form-control" style={{width:'90%', height: '25px', marginLeft: '20px'}}
                 type="text"
                 name="search"
                 id="search"
                 value={this.state.query}
+                placeholder="Search by Symbol"
                 onChange={this.handleSearch}
               />
           </div>
