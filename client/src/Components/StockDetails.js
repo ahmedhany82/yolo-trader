@@ -8,6 +8,7 @@ export default class StockDetails extends Component {
   chartRef = React.createRef();
 
   state = {
+    myChartRef: undefined,
     symbol: undefined,
     companyName: undefined,
     change: undefined,
@@ -29,10 +30,57 @@ export default class StockDetails extends Component {
     chartRange: '1d'
   }
 
+  chartUpdate() {
+      const ticker = this.props.match.params.ticker;
+      console.log(`chartUpdate() is called with range: ${this.state.chartRange}`)
+      axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/batch?token=${process.env.REACT_APP_KEY}&types=chart,quote&range=${this.state.chartRange}`).then(response => {
+        console.log(response.data.chart)
+        let dates = response.data.chart.map(element => {
+          return element.date;
+        })
+        let prices = response.data.chart.map(element => {
+          return element.close;
+        })
+        this.setState({
+          data: prices,
+          labels: dates
+        }, () => {
+          const { data, labels } = this.state;
+          new Chart(this.state.myChartRef, {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "",
+                        backgroundColor: 'rgb(173,216,230)',
+                        borderColor: 'rgb(230,230,250)',
+                        data: data
+                    }
+                ]
+            },
+            options: {
+                //Customize chart options
+                hover: {
+                  mode: "index",
+                  intersect: false,
+                },
+                legend: {
+                  display: false,
+                },
+            }
+          });
+        })
+      }).catch(err => {
+        console.log(err)
+      })
+  }
+
   componentDidMount() {
 
     console.log("Component did mount is called")
-    const myChartRef = this.chartRef.current.getContext("2d");
+    // const myChartRef = this.chartRef.current.getContext("2d");
+    this.state.myChartRef = this.chartRef.current.getContext("2d");
     const ticker = this.props.match.params.ticker;
     
     axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/quote?displayPercent=true&token=${process.env.REACT_APP_KEY}`).then(response => {
@@ -59,48 +107,49 @@ export default class StockDetails extends Component {
         console.log(err)
     })
 
+    this.chartUpdate();
     //call one api, the chart one gets the quote at the end
-    axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/batch?token=${process.env.REACT_APP_KEY}&types=chart,quote&range=${this.state.chartRange}`).then(response => {
-      console.log(response.data.chart)
-      let dates = response.data.chart.map(element => {
-        return element.date;
-      })
-      let prices = response.data.chart.map(element => {
-        return element.close;
-      })
-      this.setState({
-        data: prices,
-        labels: dates
-      }, () => {
-        const { data, labels } = this.state;
-        new Chart(myChartRef, {
-          type: "line",
-          data: {
-              labels: labels,
-              datasets: [
-                  {
-                      label: "",
-                      backgroundColor: 'rgb(173,216,230)',
-                      borderColor: 'rgb(230,230,250)',
-                      data: data
-                  }
-              ]
-          },
-          options: {
-              //Customize chart options
-              hover: {
-                mode: "index",
-                intersect: false,
-              },
-              legend: {
-                display: false,
-              },
-          }
-        });
-      })
-    }).catch(err => {
-      console.log(err)
-    })
+    // axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/batch?token=${process.env.REACT_APP_KEY}&types=chart,quote&range=${this.state.chartRange}`).then(response => {
+    //   console.log(response.data.chart)
+    //   let dates = response.data.chart.map(element => {
+    //     return element.date;
+    //   })
+    //   let prices = response.data.chart.map(element => {
+    //     return element.close;
+    //   })
+    //   this.setState({
+    //     data: prices,
+    //     labels: dates
+    //   }, () => {
+    //     const { data, labels } = this.state;
+    //     new Chart(myChartRef, {
+    //       type: "line",
+    //       data: {
+    //           labels: labels,
+    //           datasets: [
+    //               {
+    //                   label: "",
+    //                   backgroundColor: 'rgb(173,216,230)',
+    //                   borderColor: 'rgb(230,230,250)',
+    //                   data: data
+    //               }
+    //           ]
+    //       },
+    //       options: {
+    //           //Customize chart options
+    //           hover: {
+    //             mode: "index",
+    //             intersect: false,
+    //           },
+    //           legend: {
+    //             display: false,
+    //           },
+    //       }
+    //     });
+    //   })
+    // }).catch(err => {
+    //   console.log(err)
+    // })
 
     this.state.socket.onopen = () => {
       this.state.socket.send(JSON.stringify({'type':'subscribe', 'symbol': `${ticker}`}));
@@ -156,7 +205,10 @@ export default class StockDetails extends Component {
     const range = event.target.name;
     this.setState({
       chartRange: range
+    }, () => {
+      this.chartUpdate() 
     });
+  // this.chartUpdate();
   }
 
   render() {
@@ -180,9 +232,9 @@ export default class StockDetails extends Component {
           <div className="d-flex justify-content-end">
             <div style={{width: "15vw"}} class="btn-group me-2" role="group" aria-label="Second group">
                 <button onClick={this.handleChartChange} name="1d" type="button" class="btn btn-secondary">1D</button>
-                <button onClick={this.handleChartChange} name="1w" type="button" class="btn btn-secondary">1W</button>
                 <button onClick={this.handleChartChange} name="1m" type="button" class="btn btn-secondary">1M</button>
                 <button onClick={this.handleChartChange} name="ytd" type="button" class="btn btn-secondary">YTD</button>
+                <button onClick={this.handleChartChange} name="1y" type="button" class="btn btn-secondary">1Y</button>
             </div>
           </div>
             <div style={{width: "70vw"}}>
