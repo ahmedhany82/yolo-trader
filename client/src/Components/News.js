@@ -43,7 +43,10 @@ export default class News extends Component {
     })
     return (
       <div>
-        {newsList}
+        <h3 className="ml-5 mt-3">News</h3>
+        <div>
+          {newsList}
+        </div>
       </div>
     )
   }

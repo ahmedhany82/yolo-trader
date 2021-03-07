@@ -51,7 +51,7 @@ export default class StockDetails extends Component {
         marketCap: data.marketCap,
         peRatio: data.peRatio,
         avgTotalVolume: data.avgTotalVolume,
-        ytdChange: data.ytdChange,
+        ytdChange: data.ytdChange.toFixed(2),
         previousClose: data.previousClose,
         week52High: data.week52High,
         week52Low: data.week52Low,
@@ -179,10 +179,18 @@ export default class StockDetails extends Component {
                     </div>
                   </div>
               </div>
-              <div style={{width: "30vw"}} className="d-flex flex-column justify-content-start align-items-center">
+              <div style={{width: "30vw"}} className="mt-3 d-flex flex-column justify-content-start align-items-center">
                 <div>
                   <button style={{width: "8vw"}} type="button" class="btn btn-success btn-lg mr-2">Buy</button>
                   <button style={{width: "8vw"}} type="button" class="btn btn-danger btn-lg">Sell</button>
+                </div>
+                <div>
+                  <h3 className="mt-5">Stock Information</h3>
+                  <p>Previous Close: {this.state.previousClose}</p>
+                  <p>Market Cap: {this.state.marketCap}</p>
+                  <p>PE Ratio (TTM): {this.state.peRatio}</p>
+                  <p>52 Week Range: {this.state.week52Low} - {this.state.week52High}</p>
+                  <p>YtD Change: {this.state.ytdChange} %</p>
                 </div>
               </div>
           </div>
