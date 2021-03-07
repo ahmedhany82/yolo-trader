@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Chart from "chart.js";
 import Searchbar from "./Searchbar"
+import News from "./News"
 
 
 export default class StockDetails extends Component {
@@ -9,7 +10,7 @@ export default class StockDetails extends Component {
   chartRef = React.createRef();
 
   state = {
-    ticker: window.localStorage.getItem('ticker') || this.props.match.params.ticker,
+    ticker: this.props.match.params.ticker,
     myChartRef: undefined,
     myChart: undefined,
     companyName: undefined,
@@ -34,13 +35,12 @@ export default class StockDetails extends Component {
   componentDidMount() {
 
     console.log("Component did mount is called")
-    window.localStorage.setItem('ticker', this.props.match.params.ticker)
+
     // const myChartRef = this.chartRef.current.getContext("2d");
     this.state.myChartRef = this.chartRef.current.getContext("2d");
 
     
-    axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/quote?displayPercent=true&token=${process.env.REACT_APP_KEY}`).then(response => {
-    // axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/quote?displayPercent=true&token=pk_476aa872c5f94e4e847ad136d6ebc2a8`).then(response => {
+    axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/quote?displayPercent=true&token=${process.env.REACT_APP_IEXTEST_KEY}`).then(response => {
       const data = response.data;
       this.setState({
         companyName: data.companyName,
@@ -79,7 +79,7 @@ export default class StockDetails extends Component {
  }
 
   chartUpdate() {
-      axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/batch?token=${process.env.REACT_APP_KEY}&types=chart,quote&range=${this.state.chartRange}`).then(response => {
+      axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/batch?token=${process.env.REACT_APP_IEXTEST_KEY}&types=chart,quote&range=${this.state.chartRange}`).then(response => {
         let dates = response.data.chart.map(element => {
           return element.date;
         })
@@ -145,37 +145,48 @@ export default class StockDetails extends Component {
   render() {
     return (
       <div>
-          <div className="d-flex flex-column" >
-            <div className="ml-5">
-              <h3 style={{marginBottom: '0px'}}>{this.state.ticker}</h3>
-              <p style={{color:'grey', paddingLeft: "4px", marginBottom: '0px'}}>{this.state.companyName}</p>
-            </div>
-            <div style={{width: '32vw', height: '10vh'}} className="d-flex flex-row justify-content-between align-items-center ml-5">
-              <h1>${this.state.latestPrice}</h1>
-              <div className="d-flex flex-row" style={{width: '21vw'}}>
-                <h4 style={(this.state.change < 0)? {color: 'red', marginRight: '5px'}: {color: 'green', marginRight: '5px'}}>{this.state.change}</h4>
-                <h4 style={(this.state.changePercent < 0)? {color: 'red'}: {color: 'green'}} >({this.state.changePercent}%)</h4>
-              </div>
-            </div>
-            
-          </div>
-          <div style={{width: "70vw"}}>
-          <div className="d-flex justify-content-end">
-            <div style={{width: "15vw"}} class="btn-group me-2" role="group" aria-label="Second group">
-                <button onClick={this.handleChartChange} name="1d" type="button" class="btn btn-secondary">1D</button>
-                <button onClick={this.handleChartChange} name="1m" type="button" class="btn btn-secondary">1M</button>
-                <button onClick={this.handleChartChange} name="ytd" type="button" class="btn btn-secondary">YTD</button>
-                <button onClick={this.handleChartChange} name="1y" type="button" class="btn btn-secondary">1Y</button>
-            </div>
-          </div>
-            <div >
-                <canvas style={{width: "70vw", height: "40vh"}}
-                    id="myChart"
-                    ref={this.chartRef}
+          <div className="d-flex flex-row">
+              <div>
+                  <div className="d-flex flex-row" >
+                    <div className="ml-5">
+                      <h3 style={{marginBottom: '0px', paddingTop: '15px'}}>{this.state.ticker}</h3>
+                      <p style={{color:'grey', paddingLeft: "4px", marginBottom: '0px'}}>{this.state.companyName}</p>
+                    </div>
+                    <div style={{width: '32vw', height: '10vh'}} className="d-flex flex-row justify-content-between align-items-center ml-5">
+                      <h1>${this.state.latestPrice}</h1>
+                      <div className="d-flex flex-row" style={{width: '21vw'}}>
+                        <h4 style={(this.state.change < 0)? {color: 'red', marginRight: '5px'}: {color: 'green', marginRight: '5px'}}>{this.state.change}</h4>
+                        <h4 style={(this.state.changePercent < 0)? {color: 'red'}: {color: 'green'}} >({this.state.changePercent}%)</h4>
+                      </div>
+                    </div>
                     
-                />
-            </div>
+                  </div>
+                  <div style={{width: "70vw"}}>
+                    <div className="d-flex justify-content-end">
+                      <div style={{width: "15vw"}} class="btn-group me-2" role="group" aria-label="Second group">
+                          <button onClick={this.handleChartChange} name="1d" type="button" class="btn btn-secondary">1D</button>
+                          <button onClick={this.handleChartChange} name="1m" type="button" class="btn btn-secondary">1M</button>
+                          <button onClick={this.handleChartChange} name="ytd" type="button" class="btn btn-secondary">YTD</button>
+                          <button onClick={this.handleChartChange} name="1y" type="button" class="btn btn-secondary">1Y</button>
+                      </div>
+                    </div>
+                    <div >
+                          <canvas style={{width: "70vw", height: "40vh"}}
+                              id="myChart"
+                              ref={this.chartRef}
+                              
+                          />
+                    </div>
+                  </div>
+              </div>
+              <div style={{width: "30vw"}} className="d-flex flex-column justify-content-start align-items-center">
+                <div>
+                  <button style={{width: "8vw"}} type="button" class="btn btn-success btn-lg mr-2">Buy</button>
+                  <button style={{width: "8vw"}} type="button" class="btn btn-danger btn-lg">Sell</button>
+                </div>
+              </div>
           </div>
+          <News ticker={this.state.ticker}/>
       </div>
     )
   }
