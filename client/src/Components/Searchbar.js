@@ -61,7 +61,6 @@ export default class Searchbar extends React.Component {
           {/* <div>
               {tickersList}
           </div> */}
-        <h1 className="ml-3" style={{position: 'absolute', zIndex: '1'}}>This is a test</h1>
     </div>
     )
 

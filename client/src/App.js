@@ -20,6 +20,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    console.log("App render is called")
     return (
       <div>
         <Navbar user={this.state.user} setUser={this.setUser} />
@@ -28,6 +29,7 @@ export default class App extends React.Component {
           <Route exact path='/signup' render={props => <Signup setUser={this.setUser} {...props} />} />
           <Route exact path='/login' render={props => <Login setUser={this.setUser} {...props} />} />
           <Route exact path='/symbols/:ticker' render={props => <StockDetails user={this.state.user} {...props} />} />
+          {/* <Route exact path='/symbols/:ticker' component={props => <StockDetails user={this.state.user} {...props} />} /> */}
         </Switch>
       </div>
     )

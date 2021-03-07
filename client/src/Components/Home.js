@@ -12,6 +12,7 @@ export default class Home extends Component {
           <>
             <h1 className="ml-3">Welcome {this.props.user.username}</h1>
             <Searchbar user={this.props.user}/>
+            <h1 className="ml-3" style={{position: 'absolute', zIndex: '1'}}>This is a test</h1>
           </>
         ) : (
             <>
