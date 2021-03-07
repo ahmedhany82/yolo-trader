@@ -43,7 +43,7 @@ export default class Searchbar extends React.Component {
       // })  
     return (
       <div>
-        <form style={{width:'100%', marginBottom: '50px'}} autocomplete="off">
+        <form style={{width:'100%', marginBottom: '50px'}} autoComplete="off">
           <div className="form-group">
               <label className="ml-3" htmlFor="search"></label>
               <input className="form-control" style={{width:'90%', height: '25px', marginLeft: '20px'}}

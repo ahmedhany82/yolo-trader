@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import Chart from "chart.js";
+import Searchbar from "./Searchbar"
 
 
 export default class StockDetails extends Component {
@@ -8,33 +9,77 @@ export default class StockDetails extends Component {
   chartRef = React.createRef();
 
   state = {
+    ticker: window.localStorage.getItem('ticker') || this.props.match.params.ticker,
     myChartRef: undefined,
-    symbol: undefined,
+    myChart: undefined,
     companyName: undefined,
-    change: undefined,
     latestPrice: undefined,
+    change: undefined,
     changePercent: undefined,
     latestTime: undefined,
-    lastPrice: undefined, //this is last trade use https://finnhub.io/api/v1/quote?symbol=SPCE&token= for closing price
-    labels: [],
-    data: [],
-    week52High: undefined,
-    week52Low: undefined,
     marketCap: undefined,
     peRatio: undefined,
     avgTotalVolume: undefined,
     ytdChange: undefined,
     previousClose: undefined,
-    socket: new WebSocket(`wss://ws.finnhub.io?token=${process.env.REACT_APP_FINNHUB_KEY}`),
-    diff: undefined,
-    chartRange: '1d'
+    week52High: undefined,
+    week52Low: undefined,
+    labels: [],
+    data: [],
+    chartRange: '1d',
+    lastPrice: undefined, //this is last trade use https://finnhub.io/api/v1/quote?symbol=SPCE&token= for closing price
+    socket: new WebSocket(`wss://ws.finnhub.io?token=${process.env.REACT_APP_FINNHUB_KEY}`)
   }
 
+  componentDidMount() {
+
+    console.log("Component did mount is called")
+    window.localStorage.setItem('ticker', this.props.match.params.ticker)
+    // const myChartRef = this.chartRef.current.getContext("2d");
+    this.state.myChartRef = this.chartRef.current.getContext("2d");
+
+    
+    axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/quote?displayPercent=true&token=${process.env.REACT_APP_KEY}`).then(response => {
+    // axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/quote?displayPercent=true&token=pk_476aa872c5f94e4e847ad136d6ebc2a8`).then(response => {
+      const data = response.data;
+      this.setState({
+        companyName: data.companyName,
+        latestPrice: data.latestPrice,
+        change: data.change,
+        changePercent: data.changePercent.toFixed(2),
+        latestTime: data.latestTime,
+        marketCap: data.marketCap,
+        peRatio: data.peRatio,
+        avgTotalVolume: data.avgTotalVolume,
+        ytdChange: data.ytdChange,
+        previousClose: data.previousClose,
+        week52High: data.week52High,
+        week52Low: data.week52Low,
+      });
+    }).catch(err => {
+        console.log(err)
+    })
+
+    this.chartUpdate();
+
+    this.state.socket.onopen = () => {
+      this.state.socket.send(JSON.stringify({'type':'subscribe', 'symbol': `${this.state.ticker}`}));
+    };
+
+    this.state.socket.onmessage = event => {
+        if(JSON.parse(event.data)['data'] !== undefined) {
+          JSON.parse(event.data)['data'].map(element => {
+            let price = element.p;
+            this.setState({
+              lastPrice: price,
+            });
+          });  
+      }
+    };
+ }
+
   chartUpdate() {
-      const ticker = this.props.match.params.ticker;
-      console.log(`chartUpdate() is called with range: ${this.state.chartRange}`)
-      axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/batch?token=${process.env.REACT_APP_KEY}&types=chart,quote&range=${this.state.chartRange}`).then(response => {
-        console.log(response.data.chart)
+      axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/batch?token=${process.env.REACT_APP_KEY}&types=chart,quote&range=${this.state.chartRange}`).then(response => {
         let dates = response.data.chart.map(element => {
           return element.date;
         })
@@ -42,11 +87,14 @@ export default class StockDetails extends Component {
           return element.close;
         })
         this.setState({
-          data: prices,
-          labels: dates
+          data: prices, /* The axis should depend on 52-week high */
+          labels: dates, 
         }, () => {
           const { data, labels } = this.state;
-          new Chart(this.state.myChartRef, {
+          
+          if(this.myChart) {this.myChart.destroy()}; /* Destroy previous chart if it exists */
+          
+          this.myChart = new Chart(this.state.myChartRef, {
             type: "line",
             data: {
                 labels: labels,
@@ -60,7 +108,6 @@ export default class StockDetails extends Component {
                 ]
             },
             options: {
-                //Customize chart options
                 hover: {
                   mode: "index",
                   intersect: false,
@@ -68,6 +115,8 @@ export default class StockDetails extends Component {
                 legend: {
                   display: false,
                 },
+                responsive: true,
+                maintainAspectRatio: false,
             }
           });
         })
@@ -75,124 +124,6 @@ export default class StockDetails extends Component {
         console.log(err)
       })
   }
-
-  componentDidMount() {
-
-    console.log("Component did mount is called")
-    // const myChartRef = this.chartRef.current.getContext("2d");
-    this.state.myChartRef = this.chartRef.current.getContext("2d");
-    const ticker = this.props.match.params.ticker;
-    
-    axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/quote?displayPercent=true&token=${process.env.REACT_APP_KEY}`).then(response => {
-    // axios.get(`https://cloud.iexapis.com/stable/stock/${ticker}/quote?displayPercent=true&token=pk_476aa872c5f94e4e847ad136d6ebc2a8`).then(response => {
-      const data = response.data;
-      console.log(data)
-      this.setState({
-        symbol: data.symbol,
-        companyName: data.companyName,
-        latestPrice: data.latestPrice,
-        change: data.change,
-        changePercent: data.changePercent.toFixed(2),
-        latestTime: data.latestTime,
-        marketCap: data.marketCap,
-        peRatio: data.peRatio,
-        avgTotalVolume: data.avgTotalVolume,
-        ytdChange: data.ytdChange,
-        previousClose: data.previousClose,
-        week52High: data.week52High,
-        week52Low: data.week52Low,
-        webSocket: undefined
-      });
-    }).catch(err => {
-        console.log(err)
-    })
-
-    this.chartUpdate();
-    //call one api, the chart one gets the quote at the end
-    // axios.get(`https://sandbox.iexapis.com/stable/stock/${ticker}/batch?token=${process.env.REACT_APP_KEY}&types=chart,quote&range=${this.state.chartRange}`).then(response => {
-    //   console.log(response.data.chart)
-    //   let dates = response.data.chart.map(element => {
-    //     return element.date;
-    //   })
-    //   let prices = response.data.chart.map(element => {
-    //     return element.close;
-    //   })
-    //   this.setState({
-    //     data: prices,
-    //     labels: dates
-    //   }, () => {
-    //     const { data, labels } = this.state;
-    //     new Chart(myChartRef, {
-    //       type: "line",
-    //       data: {
-    //           labels: labels,
-    //           datasets: [
-    //               {
-    //                   label: "",
-    //                   backgroundColor: 'rgb(173,216,230)',
-    //                   borderColor: 'rgb(230,230,250)',
-    //                   data: data
-    //               }
-    //           ]
-    //       },
-    //       options: {
-    //           //Customize chart options
-    //           hover: {
-    //             mode: "index",
-    //             intersect: false,
-    //           },
-    //           legend: {
-    //             display: false,
-    //           },
-    //       }
-    //     });
-    //   })
-    // }).catch(err => {
-    //   console.log(err)
-    // })
-
-    this.state.socket.onopen = () => {
-      this.state.socket.send(JSON.stringify({'type':'subscribe', 'symbol': `${ticker}`}));
-    };
-
-    let difference = this.state.previousClose;
-    this.state.socket.onmessage = event => {
-        if(JSON.parse(event.data)['data'] !== undefined) {
-          JSON.parse(event.data)['data'].map(element => {
-            let price = element.p;
-            this.setState({
-              lastPrice: price,
-              diff: price - this.state.previousClose
-            });
-          });  
-      }
-    };
-
-    // const socket = new WebSocket('wss://ws.finnhub.io?token=');
-    //const socket = new WebSocket('wss://ws.finnhub.io?token=');
-      // socket.addEventListener('open', function (event) {
-      //     socket.send(JSON.stringify({'type':'subscribe', 'symbol': `${ticker}`}))
-      // });
-
-      // socket.addEventListener('message', event => {
-      //   //check if data is empty
-      //     JSON.parse(event.data)['data'].map(element => {
-      //       // console.log(element.p)
-      //       let price = element.p;
-      //       this.setState({
-      //         lastPrice: price
-      //       });
-      //     });
-      // });
-
-
-
-
-    // var unsubscribe = function(symbol) {
-    //   socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}))
-    // }
-    // unsubscribe('TSLA')
- }
 
   componentWillUnmount() {
     console.log("component will unmount is called")
@@ -208,15 +139,15 @@ export default class StockDetails extends Component {
     }, () => {
       this.chartUpdate() 
     });
-  // this.chartUpdate();
   }
+
 
   render() {
     return (
       <div>
           <div className="d-flex flex-column" >
             <div className="ml-5">
-              <h3 style={{marginBottom: '0px'}}>{this.state.symbol}</h3>
+              <h3 style={{marginBottom: '0px'}}>{this.state.ticker}</h3>
               <p style={{color:'grey', paddingLeft: "4px", marginBottom: '0px'}}>{this.state.companyName}</p>
             </div>
             <div style={{width: '32vw', height: '10vh'}} className="d-flex flex-row justify-content-between align-items-center ml-5">
@@ -237,10 +168,11 @@ export default class StockDetails extends Component {
                 <button onClick={this.handleChartChange} name="1y" type="button" class="btn btn-secondary">1Y</button>
             </div>
           </div>
-            <div style={{width: "70vw"}}>
-                <canvas
+            <div >
+                <canvas style={{width: "70vw", height: "40vh"}}
                     id="myChart"
                     ref={this.chartRef}
+                    
                 />
             </div>
           </div>

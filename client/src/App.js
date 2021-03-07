@@ -28,8 +28,8 @@ export default class App extends React.Component {
           <Route exact path='/' render={props => <Home user={this.state.user} {...props} />} />
           <Route exact path='/signup' render={props => <Signup setUser={this.setUser} {...props} />} />
           <Route exact path='/login' render={props => <Login setUser={this.setUser} {...props} />} />
-          <Route exact path='/symbols/:ticker' render={props => <StockDetails user={this.state.user} {...props} />} />
-          {/* <Route exact path='/symbols/:ticker' component={props => <StockDetails user={this.state.user} {...props} />} /> */}
+          {/* <Route exact path='/symbols/:ticker' render={props => <StockDetails user={this.state.user} {...props} />} /> */}
+          <Route exact path='/symbols/:ticker' component={props => <StockDetails user={this.state.user} {...props} />} />
         </Switch>
       </div>
     )
