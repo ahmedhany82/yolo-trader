@@ -1,5 +1,6 @@
 const { compareSync } = require("bcrypt");
 const Position = require("../models/Position");
+const { count } = require("../models/User");
 const User = require("../models/User");
 const router = require("express").Router();
 
@@ -65,6 +66,8 @@ router.post("/:userId/position/open/:ticker", (req, res, next) => {
 })
 
 /* close position for a given stock ticker */
+
+//Find the position associated with the user. There could be other positions with the same ticker for other users
 router.post("/:userId/position/close/:ticker", (req, res, next) => {
   const position = Position.find({ ticker: req.params.ticker }).then(position => {
     const user = User.findByIdAndUpdate(req.params.userId, {
@@ -81,6 +84,22 @@ router.post("/:userId/position/close/:ticker", (req, res, next) => {
   }).catch(err => {
     console.log("Error while deleting a position: ", err);
   });
+ })
+
+/* update position for a given stock ticker */
+router.post("/:userId/position/update/:ticker", (req, res, next) => {
+  const { count, averagePrice } = req.body;
+  const user = User.findById(req.params.userId).populate('holdings').then(user => {
+    let position = user.holdings.filter(position => {
+      return (position.ticker === req.params.ticker)
+    })
+    Position.findByIdAndUpdate(position[0]._id, { count: count, averagePrice: averagePrice}, {new: true}).then(updatedPosition => {
+      console.log(updatedPosition);
+      res.status(200).json({ message: 'Position updated successfully'})
+    })
+  }).catch(err => {
+    console.log("Error while finding a user by ID: ", err);
+  })
  })
 
 module.exports = router;
