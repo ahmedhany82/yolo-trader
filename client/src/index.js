@@ -10,7 +10,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 axios.get('api/auth/loggedin')
   .then(response => {
-    console.log('hi!')
     const user = response.data;
     ReactDOM.render(
       <BrowserRouter>

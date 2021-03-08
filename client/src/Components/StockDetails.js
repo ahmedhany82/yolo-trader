@@ -181,10 +181,10 @@ export default class StockDetails extends Component {
                   <div style={{width: "70vw"}}>
                     <div className="d-flex justify-content-end">
                       <div style={{width: "15vw"}} class="btn-group me-2" role="group" aria-label="Second group">
-                          <button onClick={this.handleChartChange} name="1d" type="button" class="btn btn-secondary">1D</button>
-                          <button onClick={this.handleChartChange} name="1m" type="button" class="btn btn-secondary">1M</button>
-                          <button onClick={this.handleChartChange} name="ytd" type="button" class="btn btn-secondary">YTD</button>
-                          <button onClick={this.handleChartChange} name="1y" type="button" class="btn btn-secondary">1Y</button>
+                          <button onClick={this.handleChartChange} name="1d" type="button" className="btn btn-secondary">1D</button>
+                          <button onClick={this.handleChartChange} name="1m" type="button" className="btn btn-secondary">1M</button>
+                          <button onClick={this.handleChartChange} name="ytd" type="button" className="btn btn-secondary">YTD</button>
+                          <button onClick={this.handleChartChange} name="1y" type="button" className="btn btn-secondary">1Y</button>
                       </div>
                     </div>
                     <div >
@@ -201,8 +201,8 @@ export default class StockDetails extends Component {
               </div>
               <div style={{width: "30vw"}} className="mt-3 d-flex flex-column justify-content-start align-items-center">
                 <div>
-                  <button onClick={this.handleOrder} style={{width: "8vw"}} name="buy" type="button" class="btn btn-success btn-lg mr-2">Buy</button>
-                  <button onClick={this.handleOrder} style={{width: "8vw"}} name="sell" type="button" class="btn btn-danger btn-lg">Sell</button>
+                  <button onClick={this.handleOrder} style={{width: "8vw"}} name="buy" type="button" className="btn btn-success btn-lg mr-2">Buy</button>
+                  <button onClick={this.handleOrder} style={{width: "8vw"}} name="sell" type="button" className="btn btn-danger btn-lg">Sell</button>
                 </div>
                 <OrderDetails flag={this.state.displayOrderComponent} callback={this.handleCose}/>
                 <News ticker={this.state.ticker} flag={!this.state.displayOrderComponent}/>
