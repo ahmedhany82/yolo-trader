@@ -46,8 +46,8 @@ export default class StockDetails extends Component {
       const data = response.data;
       this.setState({
         companyName: data.companyName,
-        latestPrice: data.latestPrice,
-        change: data.change,
+        latestPrice: data.latestPrice.toFixed(2),
+        change: data.change.toFixed(2),
         changePercent: data.changePercent.toFixed(2),
         latestTime: data.latestTime,
         marketCap: data.marketCap,
@@ -117,6 +117,11 @@ export default class StockDetails extends Component {
                 legend: {
                   display: false,
                 },
+                xAxes: [
+                  {
+                    display: false,
+                  },
+                ],
                 responsive: true,
                 maintainAspectRatio: false,
             }
@@ -160,7 +165,7 @@ export default class StockDetails extends Component {
 
   render() {
     return (
-      <div>
+       <div>
           <div className="d-flex flex-row">
               <div>
                   <div className="d-flex flex-row" >
@@ -188,12 +193,15 @@ export default class StockDetails extends Component {
                       </div>
                     </div>
                     <div >
-                          <canvas style={{width: "70vw", height: "40vh"}}
-                              id="myChart"
-                              ref={this.chartRef}
-                              
-                          />
+                          <canvas style={{width: "70vw", height: "40vh"}} id="myChart" ref={this.chartRef}/>
                     </div>
+                    <StockInfo 
+                        previousClose={this.state.previousClose}
+                        marketCap={this.state.marketCap}
+                        peRatio={this.state.peRatio}
+                        week52High={this.state.week52High}
+                        week52Low={this.state.week52Low}
+                        ytdChange = {this.state.ytdChange}/>
                   </div>
               </div>
               <div style={{width: "30vw"}} className="mt-3 d-flex flex-column justify-content-start align-items-center">
@@ -202,19 +210,10 @@ export default class StockDetails extends Component {
                   <button onClick={this.handleOrder} style={{width: "8vw"}} name="sell" type="button" class="btn btn-danger btn-lg">Sell</button>
                 </div>
                 <OrderDetails flag={this.state.displayOrderComponent} callback={this.handleCose}/>
-                <StockInfo flag={!this.state.displayOrderComponent}/>
-                <div>
-                  <h3 className="mt-5">Stock Information</h3>
-                  <p>Previous Close: {this.state.previousClose}</p>
-                  <p>Market Cap: {this.state.marketCap}</p>
-                  <p>PE Ratio (TTM): {this.state.peRatio}</p>
-                  <p>52 Week Range: {this.state.week52Low} - {this.state.week52High}</p>
-                  <p>YtD Change: {this.state.ytdChange} %</p>
-                </div>
+                <News ticker={this.state.ticker} flag={!this.state.displayOrderComponent}/>
               </div>
-          </div>
-          <News ticker={this.state.ticker}/>
-      </div>
+          </div>        
+        </div>
     )
   }
 }

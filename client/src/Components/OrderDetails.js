@@ -36,7 +36,7 @@ export default class OrderDetails extends Component {
         <div style={{width: '23vw'}} className="mt-3 border p-3 border-primary">
           <div className="d-flex flex-row justify-content-between align-items-start">
             
-            <h3 className="mt-3">Place an order</h3>
+            <h3 className="mt-3 mb-4">Place an order</h3>
             <button type="button" onClick={this.closeMenue} class="btn-close mt-3" aria-label="Close">X</button>
           </div>         
           <form onSubmit={this.handleSubmit} style={{width:'100%', marginBottom: '50px'}}>
