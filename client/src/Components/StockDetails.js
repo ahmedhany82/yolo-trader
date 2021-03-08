@@ -30,7 +30,8 @@ export default class StockDetails extends Component {
     data: [],
     chartRange: '1d',
     lastPrice: undefined, //this is last trade use https://finnhub.io/api/v1/quote?symbol=SPCE&token= for closing price
-    socket: new WebSocket(`wss://ws.finnhub.io?token=${process.env.REACT_APP_FINNHUB_KEY}`)
+    socket: new WebSocket(`wss://ws.finnhub.io?token=${process.env.REACT_APP_FINNHUB_KEY}`),
+    displayOrderComponent: false
   }
 
   componentDidMount() {
@@ -142,6 +143,20 @@ export default class StockDetails extends Component {
     });
   }
 
+  handleOrder = event => {
+    const order = event.target.name;
+    this.setState({
+      displayOrderComponent: true
+    })
+  }
+
+  handleCose = event => {
+    console.log("close button is pressed")
+    this.setState({
+      displayOrderComponent: false
+    })
+  }
+
 
   render() {
     return (
@@ -155,6 +170,7 @@ export default class StockDetails extends Component {
                     </div>
                     <div style={{width: '32vw', height: '10vh'}} className="d-flex flex-row justify-content-between align-items-center ml-5">
                       <h1>${this.state.latestPrice}</h1>
+                      {/* <h1>${this.state.lastPrice}</h1> */}
                       <div className="d-flex flex-row" style={{width: '21vw'}}>
                         <h4 style={(this.state.change < 0)? {color: 'red', marginRight: '5px'}: {color: 'green', marginRight: '5px'}}>{this.state.change}</h4>
                         <h4 style={(this.state.changePercent < 0)? {color: 'red'}: {color: 'green'}} >({this.state.changePercent}%)</h4>
@@ -182,11 +198,11 @@ export default class StockDetails extends Component {
               </div>
               <div style={{width: "30vw"}} className="mt-3 d-flex flex-column justify-content-start align-items-center">
                 <div>
-                  <button style={{width: "8vw"}} type="button" class="btn btn-success btn-lg mr-2">Buy</button>
-                  <button style={{width: "8vw"}} type="button" class="btn btn-danger btn-lg">Sell</button>
+                  <button onClick={this.handleOrder} style={{width: "8vw"}} name="buy" type="button" class="btn btn-success btn-lg mr-2">Buy</button>
+                  <button onClick={this.handleOrder} style={{width: "8vw"}} name="sell" type="button" class="btn btn-danger btn-lg">Sell</button>
                 </div>
-                <OrderDetails flag={true}/>
-                <StockInfo flag={false}/>
+                <OrderDetails flag={this.state.displayOrderComponent} callback={this.handleCose}/>
+                <StockInfo flag={!this.state.displayOrderComponent}/>
                 <div>
                   <h3 className="mt-5">Stock Information</h3>
                   <p>Previous Close: {this.state.previousClose}</p>
