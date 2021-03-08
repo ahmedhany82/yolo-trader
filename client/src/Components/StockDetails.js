@@ -117,11 +117,6 @@ export default class StockDetails extends Component {
                 legend: {
                   display: false,
                 },
-                xAxes: [
-                  {
-                    display: false,
-                  },
-                ],
                 responsive: true,
                 maintainAspectRatio: false,
             }
