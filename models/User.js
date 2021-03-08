@@ -21,6 +21,10 @@ const userSchema = new Schema({
       ref: 'Position'
     }
   ],
+  balance: {
+    type: Number,
+    default: 1000
+  }
 });
 
 const User = model("User", userSchema);
