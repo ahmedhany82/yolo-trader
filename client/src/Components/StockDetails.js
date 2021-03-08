@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import Chart from "chart.js";
-import Searchbar from "./Searchbar"
 import News from "./News"
 import OrderDetails from "./OrderDetails"
 import StockInfo from "./StockInfo"
@@ -40,7 +39,6 @@ export default class StockDetails extends Component {
 
     // const myChartRef = this.chartRef.current.getContext("2d");
     this.state.myChartRef = this.chartRef.current.getContext("2d");
-
     
     axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/quote?displayPercent=true&token=${process.env.REACT_APP_IEXTEST_KEY}`).then(response => {
       const data = response.data;
@@ -128,7 +126,6 @@ export default class StockDetails extends Component {
   }
 
   componentWillUnmount() {
-    console.log("component will unmount is called")
     let symbol = this.state.symbol;
     this.state.socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}));
     alert('The component is going to be unmounted');
@@ -144,14 +141,13 @@ export default class StockDetails extends Component {
   }
 
   handleOrder = event => {
-    const order = event.target.name;
+    // const order = event.target.name;
     this.setState({
       displayOrderComponent: true
     })
   }
 
-  handleCose = event => {
-    console.log("close button is pressed")
+  handleClose = event => {
     this.setState({
       displayOrderComponent: false
     })
@@ -204,7 +200,7 @@ export default class StockDetails extends Component {
                   <button onClick={this.handleOrder} style={{width: "8vw"}} name="buy" type="button" className="btn btn-success btn-lg mr-2">Buy</button>
                   <button onClick={this.handleOrder} style={{width: "8vw"}} name="sell" type="button" className="btn btn-danger btn-lg">Sell</button>
                 </div>
-                <OrderDetails flag={this.state.displayOrderComponent} callback={this.handleCose}/>
+                <OrderDetails flag={this.state.displayOrderComponent} callback={this.handleClose}/>
                 <News ticker={this.state.ticker} flag={!this.state.displayOrderComponent}/>
               </div>
           </div>        

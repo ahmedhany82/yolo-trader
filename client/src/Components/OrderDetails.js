@@ -17,20 +17,17 @@ export default class OrderDetails extends Component {
     }))
   };
 
-  handleSubmit = event => {
-
+  handleOrder = event => {
+    console.log("An order is placed!")
   }
 
   closeMenue = event => {
-    // this.setState({
-    //   opene: false
-    // })
-    console.log("close")
     this.props.callback();
   }
 
   render() {
     // if(this.props.flag) {
+      
       if(this.props.flag) {
       return (
         <div style={{width: '23vw'}} className="mt-3 border p-3 border-primary shadow p-3 mb-5 bg-body rounded">
@@ -72,11 +69,10 @@ export default class OrderDetails extends Component {
                         name="amount"
                         id="amount"
                         placeholder="Amount ($)"
-                        value={this.state.limit * this.state.number}
-                        onChange={this.handleFormInput}
+                        value={this.state.limit * this.state.number || 0} 
                         disabled/>
                     </div>                    
-                    <button type="submit" className="btn btn-primary mt-3">Place order</button>                                                                            
+                    <button type="submit" onClick={this.handleOrder} className="btn btn-primary mt-3">Place order</button>                                                                            
                 </form>
         </div>
       )  

@@ -28,7 +28,7 @@ export default class News extends Component {
               <div style={{maxWidth: '30vw'}} className="d-flex flex-row justify-content-start">
                   <img style={{height: "8vh", width: "8vw"}} className="ml-5 mr-2" src={article.url} alt=""/>
                   <div className="d-flex flex-column justify-content-center align-self-center">
-                      <a href={article.url} target="_blank"><h5>{article.headline}</h5></a>
+                      <a href={article.url} target="_blank" rel="noreferrer"><h5>{article.headline}</h5></a>
                       <p>{article.source}</p>
                       <span style={{
                         whiteSpace: "nowrap",
