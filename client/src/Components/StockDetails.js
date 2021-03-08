@@ -3,7 +3,8 @@ import axios from 'axios';
 import Chart from "chart.js";
 import Searchbar from "./Searchbar"
 import News from "./News"
-
+import OrderDetails from "./OrderDetails"
+import StockInfo from "./StockInfo"
 
 export default class StockDetails extends Component {
 
@@ -184,6 +185,8 @@ export default class StockDetails extends Component {
                   <button style={{width: "8vw"}} type="button" class="btn btn-success btn-lg mr-2">Buy</button>
                   <button style={{width: "8vw"}} type="button" class="btn btn-danger btn-lg">Sell</button>
                 </div>
+                <OrderDetails flag={true}/>
+                <StockInfo flag={false}/>
                 <div>
                   <h3 className="mt-5">Stock Information</h3>
                   <p>Previous Close: {this.state.previousClose}</p>
