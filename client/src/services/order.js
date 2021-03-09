@@ -1,26 +1,38 @@
 import axios from 'axios';
 
-const placeOrder = (limit, number, orderType, userId) => {
+const placeOrder = (price, count, orderType, userId, ticker) => {
   if(orderType === "buy")
   {
     return axios.get(`/api/${userId}/balance`).then(res => {
       const balancefromDB = res.data;
-      if(balancefromDB < (limit * number) ) {
-        return -1; /* Order amount exceeds balance */
+      if(balancefromDB < (price * count) ) {
+        return JSON.parse('{"message": "Order exceeds balance"}')
       } else {
-        //return res.data;
-        const balance = balancefromDB - (limit * number);
+        const balance = balancefromDB - (price * count);
         return axios.post(`/api/${userId}/balance`, {balance}).then(res => {
-          return res.data
+          //Check if user has a position in the input stock
+          return axios.get(`/api/${userId}/position/${ticker}`).then(res => {
+            if(res.data.length === 0) {
+              //Open a new position
+              return axios.post(`/api/${userId}/position/open/${ticker}`, {count, averagePrice: price}).then(res => {
+                return(res.data);
+              })
+            } else {
+              //Update the existing position. Update the price to be average price taking current holdings into consideration
+              console.log(res.data[0].count)
+              let updatedPrice = ((res.data[0].count * res.data[0].averagePrice) + (price * count))/(res.data[0].count + count);
+              return axios.post(`/api/${userId}/position/update/${ticker}`, {count, averagePrice: updatedPrice}).then(res=> {
+                return(res.data);
+              })
+            }
+          })
         }).catch(err => {
           console.log(err);
         })
       }
     }).catch(err => {
-      console.log(err)
+      console.log(err);
     })
-    
-    console.log("Buy order was called", userId)
   } else {
     console.log("Sell order was called", userId)
   }

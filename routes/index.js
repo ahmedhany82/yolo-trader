@@ -37,16 +37,12 @@ router.post("/:userId/balance", (req, res, next) => {
   })
 });
 
-/* router to retrieve details of a certain position */
-router.get("/:userId/position/:ticker", (req, res, next) => {
-  res.json(`Retrieve details of ${req.params.ticker}`)
-  
-
-})
 
 /* open a position for a given stock ticker */
 router.post("/:userId/position/open/:ticker", (req, res, next) => {
+  console.log(req.body);
   const { count, averagePrice } = req.body;
+  console.log({ count, averagePrice })
   Position.create({
     ticker: req.params.ticker,
     count: count,
@@ -57,7 +53,7 @@ router.post("/:userId/position/open/:ticker", (req, res, next) => {
       }, {new: true}).then(user => {
           res.status(200).json({ message: 'Position opened successfully'})
       }).catch(err => {
-          console.log("Error while finding user by Id: ", err);
+          console.log("Error while finding user by Id in open position: ", err);
       })    
   })
   .catch(err => {
@@ -89,7 +85,9 @@ router.post("/:userId/position/close/:ticker", (req, res, next) => {
 
 /* update position for a given stock ticker */
 router.post("/:userId/position/update/:ticker", (req, res, next) => {
+  console.log(req.body)
   const { count, averagePrice } = req.body;
+  console.log({count, averagePrice});
   const user = User.findById(req.params.userId).populate('holdings').then(user => {
     let position = user.holdings.filter(position => {
       return (position.ticker === req.params.ticker)
@@ -99,8 +97,29 @@ router.post("/:userId/position/update/:ticker", (req, res, next) => {
       res.status(200).json({ message: 'Position updated successfully'})
     })
   }).catch(err => {
-    console.log("Error while finding a user by ID: ", err);
+    console.log("Error while finding a user by ID in update position: ", err);
   })
  })
+
+
+ /* get the user's position for a given stock ticker */
+
+router.get("/:userId/position/:ticker", (req, res, next) => {
+  
+  const user = User.findById(req.params.userId).populate('holdings').then(user => {
+    let position = user.holdings.filter(position => {
+      return (position.ticker === req.params.ticker)
+    })
+    if(position !== null) {
+      res.status(200).json(position);
+    } else {
+      res.status(500).json(null);
+    }
+  }).catch(err => {
+    console.log("Error while finding a user by ID in getting position: ", err);
+  })
+  
+
+})
 
 module.exports = router;

@@ -24,19 +24,15 @@ export default class OrderDetails extends Component {
     const { limit, number } = this.state;
     console.log("An order is placed!")
     console.log(limit, number, this.props.orderType);
-    placeOrder(limit, number, this.props.orderType, this.props.user._id).then(response => {
-      if(response !== -1) {
-        this.setState({
-          message: 'Success',
-          limit: '',
-          number: ''
-        })
-        console.log("Response from React: ", response)
-      } else {
-        this.setState({
-          message: 'Error'
-        })
-      }
+    placeOrder(limit, number, this.props.orderType, this.props.user._id, this.props.ticker).then(response => {
+      const message = response.message
+      this.setState({
+        message: message,
+        limit: '',
+        number: ''
+      })
+    }).catch(err => {
+      console.log(err);
     });
     //   .then(user => {
     //     if (user.message) {
