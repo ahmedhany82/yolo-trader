@@ -41,7 +41,7 @@ export default class StockDetails extends Component {
     // const myChartRef = this.chartRef.current.getContext("2d");
     this.state.myChartRef = this.chartRef.current.getContext("2d");
     
-    axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/quote?displayPercent=true&token=${process.env.REACT_APP_IEXTEST_KEY}`).then(response => {
+    axios.get(`https://${process.env.REACT_APP_URL_KEY}.iexapis.com/stable/stock/${this.state.ticker}/quote?displayPercent=true&token=${process.env.REACT_APP_IEXTEST_KEY}`).then(response => {
       const data = response.data;
       this.setState({
         companyName: data.companyName,
@@ -72,7 +72,7 @@ export default class StockDetails extends Component {
           JSON.parse(event.data)['data'].map(element => {
             let price = element.p;
             this.setState({
-              lastPrice: price,
+              lastPrice: price.toFixed(2),
             });
           });  
       }
@@ -80,7 +80,7 @@ export default class StockDetails extends Component {
  }
 
   chartUpdate() {
-      axios.get(`https://sandbox.iexapis.com/stable/stock/${this.state.ticker}/batch?token=${process.env.REACT_APP_IEXTEST_KEY}&types=chart,quote&range=${this.state.chartRange}`).then(response => {
+      axios.get(`https://${process.env.REACT_APP_URL_KEY}.iexapis.com/stable/stock/${this.state.ticker}/batch?token=${process.env.REACT_APP_IEXTEST_KEY}&types=chart,quote&range=${this.state.chartRange}`).then(response => {
         let dates = response.data.chart.map(element => {
           return element.date;
         })
