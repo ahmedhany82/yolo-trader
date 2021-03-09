@@ -30,7 +30,8 @@ export default class StockDetails extends Component {
     chartRange: '1d',
     lastPrice: undefined, //this is last trade use https://finnhub.io/api/v1/quote?symbol=SPCE&token= for closing price
     socket: new WebSocket(`wss://ws.finnhub.io?token=${process.env.REACT_APP_FINNHUB_KEY}`),
-    displayOrderComponent: false
+    displayOrderComponent: false,
+    orderType: undefined
   }
 
   componentDidMount() {
@@ -141,9 +142,11 @@ export default class StockDetails extends Component {
   }
 
   handleOrder = event => {
-    // const order = event.target.name;
+    const orderType = event.target.name;
+    console.log(orderType)
     this.setState({
-      displayOrderComponent: true
+      displayOrderComponent: true,
+      orderType: orderType
     })
   }
 
@@ -200,7 +203,7 @@ export default class StockDetails extends Component {
                   <button onClick={this.handleOrder} style={{width: "8vw"}} name="buy" type="button" className="btn btn-success btn-lg mr-2">Buy</button>
                   <button onClick={this.handleOrder} style={{width: "8vw"}} name="sell" type="button" className="btn btn-danger btn-lg">Sell</button>
                 </div>
-                <OrderDetails flag={this.state.displayOrderComponent} callback={this.handleClose}/>
+                <OrderDetails flag={this.state.displayOrderComponent} orderType={this.state.orderType} callback={this.handleClose}/>
                 <News ticker={this.state.ticker} flag={!this.state.displayOrderComponent}/>
               </div>
           </div>        

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { placeOrder } from '../services/order';
 
 export default class OrderDetails extends Component {
  
@@ -18,7 +19,24 @@ export default class OrderDetails extends Component {
   };
 
   handleOrder = event => {
+    event.preventDefault();
+    const { limit, number } = this.state;
     console.log("An order is placed!")
+    console.log(limit, number, this.props.orderType);
+    placeOrder(limit, number, this.props.orderType);
+    //   .then(user => {
+    //     if (user.message) {
+    //       this.setState({
+    //         message: user.message,
+    //         username: '',
+    //         password: ''
+    //       })
+    //     } else {
+    //       console.log(user)
+    //       this.props.setUser(user);
+    //       this.props.history.push('/');
+    //     }
+    //   })    
   }
 
   closeMenue = event => {
@@ -36,8 +54,7 @@ export default class OrderDetails extends Component {
             <h3 className="mt-3 mb-4">Place an order</h3>
             <button type="button" onClick={this.closeMenue} className="btn-close mt-3" aria-label="Close">X</button>
           </div>         
-          <form onSubmit={this.handleSubmit} style={{width:'100%', marginBottom: '50px'}}>
-                   
+          <form onSubmit={this.handleOrder} style={{width:'100%', marginBottom: '50px'}}>
                     <div className="form-group">
                         <label htmlFor="limit">Limit</label>
                         <input className="form-control" style={{width:'90%', height: '25px', marginBottom: '20px'}}
@@ -72,7 +89,7 @@ export default class OrderDetails extends Component {
                         value={this.state.limit * this.state.number || 0} 
                         disabled/>
                     </div>                    
-                    <button type="submit" onClick={this.handleOrder} className="btn btn-primary mt-3">Place order</button>                                                                            
+                    <button type="submit" className="btn btn-primary mt-3">Place order</button>                                                                                       
                 </form>
         </div>
       )  
