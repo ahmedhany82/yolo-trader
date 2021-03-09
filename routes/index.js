@@ -17,6 +17,7 @@ router.post("/:userId/portfolio", (req, res, next) => {
 
 /* route to retrieve the user's balance */
 router.get("/:userId/balance", (req, res, next) => {
+  console.log("balance was called from backend")
   const user = User.findById(req.params.userId).then(user => {
     return res.json(user.balance)
   }).catch(error => {

@@ -203,7 +203,7 @@ export default class StockDetails extends Component {
                   <button onClick={this.handleOrder} style={{width: "8vw"}} name="buy" type="button" className="btn btn-success btn-lg mr-2">Buy</button>
                   <button onClick={this.handleOrder} style={{width: "8vw"}} name="sell" type="button" className="btn btn-danger btn-lg">Sell</button>
                 </div>
-                <OrderDetails flag={this.state.displayOrderComponent} orderType={this.state.orderType} callback={this.handleClose}/>
+                <OrderDetails flag={this.state.displayOrderComponent} orderType={this.state.orderType} user={this.props.user} callback={this.handleClose}/>
                 <News ticker={this.state.ticker} flag={!this.state.displayOrderComponent}/>
               </div>
           </div>        

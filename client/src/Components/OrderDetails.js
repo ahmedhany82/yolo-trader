@@ -23,7 +23,7 @@ export default class OrderDetails extends Component {
     const { limit, number } = this.state;
     console.log("An order is placed!")
     console.log(limit, number, this.props.orderType);
-    placeOrder(limit, number, this.props.orderType);
+    placeOrder(limit, number, this.props.orderType, this.props.user._id);
     //   .then(user => {
     //     if (user.message) {
     //       this.setState({
