@@ -31,7 +31,7 @@ router.post("/:userId/balance", (req, res, next) => {
   const { balance } = req.body;
   console.log(balance)
   const user = User.findByIdAndUpdate(req.params.userId, {balance: balance}, {new: true}).then(user => {
-      return res.status(200).json(user.balance) //({ message: `Your balance is now ${user.balance}` });
+      return res.status(200).json(user.balance)
   }).catch(error => {
     console.log(error);
   })
@@ -61,27 +61,6 @@ router.post("/:userId/position/open/:ticker", (req, res, next) => {
     res.json(err);
   })
 })
-
-/* close position for a given stock ticker */
-
-//Find the position associated with the user. There could be other positions with the same ticker for other users
-// router.post("/:userId/position/close/:ticker", (req, res, next) => {
-//   const position = Position.find({ ticker: req.params.ticker }).then(position => {
-//     const user = User.findByIdAndUpdate(req.params.userId, {
-//       "$pull" : { "holdings": position[0]._id}
-//     }, {new: true}).then(user => {
-//         Position.deleteOne({ ticker: req.params.ticker }).then(position => {
-//           res.status(200).json({ message: 'Position closed successfully'})
-//         }).catch(err => {
-//           console.log("Error while deleting position: ", err);
-//         })
-//     }).catch(err => {
-//       console.log("Error while updating the user to remove position: ", err);
-//     })
-//   }).catch(err => {
-//     console.log("Error while deleting a position: ", err);
-//   });
-//  })
 
 /* close position for a given stock ticker */
 router.post("/:userId/position/close/:ticker", (req, res, next) => {
@@ -124,8 +103,7 @@ router.post("/:userId/position/update/:ticker", (req, res, next) => {
  })
 
 
- /* get the user's position for a given stock ticker */
-
+/* get the user's position for a given stock ticker */
 router.get("/:userId/position/:ticker", (req, res, next) => {
   
   const user = User.findById(req.params.userId).populate('holdings').then(user => {
