@@ -27,7 +27,7 @@ export default class StockDetails extends Component {
     week52Low: undefined,
     labels: [],
     data: [],
-    chartRange: '1d',
+    chartRange: 'ytd',
     lastPrice: undefined, //this is last trade use https://finnhub.io/api/v1/quote?symbol=SPCE&token= for closing price
     socket: new WebSocket(`wss://ws.finnhub.io?token=${process.env.REACT_APP_FINNHUB_KEY}`),
     displayOrderComponent: false,
@@ -92,7 +92,7 @@ export default class StockDetails extends Component {
           labels: dates, 
         }, () => {
           const { data, labels } = this.state;
-          
+          const maxYValue = Math.max(...data);
           if(this.myChart) {this.myChart.destroy()}; /* Destroy previous chart if it exists */
           
           this.myChart = new Chart(this.state.myChartRef, {
@@ -118,6 +118,28 @@ export default class StockDetails extends Component {
                 },
                 responsive: true,
                 maintainAspectRatio: false,
+                scales: {
+                  xAxes: [{
+                      display: false,
+                      ticks: {
+                          display: false //this will remove only the label
+                      }
+                  }],
+                  yAxes: [{
+                    ticks: {
+                     suggestedMax: maxYValue+(0.1*maxYValue)
+                     }
+                   }]
+              }
+                // scales: {
+                //   xAxes: [{
+                //     type: 'time',
+                //     ticks: {
+                //         autoSkip: true,
+                //         maxTicksLimit: 20
+                //     }
+                // }]
+                // }
             }
           });
         })

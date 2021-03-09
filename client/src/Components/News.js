@@ -37,13 +37,14 @@ export default class News extends Component {
                   <img style={{height: "8vh", width: "8vw"}} className="ml-5 mr-2" src={article.image} alt=""/>
                   <div className="d-flex flex-column justify-content-center align-self-center">
                       <a href={article.url} target="_blank" rel="noreferrer"><h5>{article.headline}</h5></a>
-                      <p>{article.source}</p>
+                      {/* <p>{article.source}</p> */}
                       <span style={{
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
                         width: "15vw",
+                        height: "8vh",
                         display: "block",
-                        overflow: "hidden",
+                        overflow: "hidden"
                       }}>{article.summary}</span>
                   </div>
               </div>
