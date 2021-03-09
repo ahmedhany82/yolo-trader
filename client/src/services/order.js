@@ -88,5 +88,14 @@ const placeOrder = (price, count, orderType, userId, ticker) => {
   }
 }
 
+const getPortfolio = (userId) => {
+  return axios.get(`/api/${userId}/portfolio`).then(res => {
+    return(res.data);
+  }).catch(err => {
+    console.log(err);
+  })
+}
 
-export { placeOrder };
+
+
+export { placeOrder, getPortfolio};
