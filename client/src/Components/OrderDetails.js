@@ -7,6 +7,7 @@ export default class OrderDetails extends Component {
   state = {
     limit: undefined,
     number: undefined,
+    message: ''
   }
 
 
@@ -23,7 +24,20 @@ export default class OrderDetails extends Component {
     const { limit, number } = this.state;
     console.log("An order is placed!")
     console.log(limit, number, this.props.orderType);
-    placeOrder(limit, number, this.props.orderType, this.props.user._id);
+    placeOrder(limit, number, this.props.orderType, this.props.user._id).then(response => {
+      if(response !== -1) {
+        this.setState({
+          message: 'Success',
+          limit: '',
+          number: ''
+        })
+        console.log("Response from React: ", response)
+      } else {
+        this.setState({
+          message: 'Error'
+        })
+      }
+    });
     //   .then(user => {
     //     if (user.message) {
     //       this.setState({
@@ -89,7 +103,8 @@ export default class OrderDetails extends Component {
                         value={this.state.limit * this.state.number || 0} 
                         disabled/>
                     </div>                    
-                    <button type="submit" className="btn btn-primary mt-3">Place order</button>                                                                                       
+                    <button type="submit" className="btn btn-primary mt-3">Place order</button>
+                    {this.state.message && (<h3>{this.state.message}</h3>)}                                                                                      
                 </form>
         </div>
       )  

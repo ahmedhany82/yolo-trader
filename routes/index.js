@@ -19,7 +19,7 @@ router.post("/:userId/portfolio", (req, res, next) => {
 router.get("/:userId/balance", (req, res, next) => {
   console.log("balance was called from backend")
   const user = User.findById(req.params.userId).then(user => {
-    return res.json(user.balance)
+    return res.status(200).json(user.balance)
   }).catch(error => {
     console.log(error);
   })
@@ -29,9 +29,9 @@ router.get("/:userId/balance", (req, res, next) => {
 /* route to update the user's balance */
 router.post("/:userId/balance", (req, res, next) => {
   const { balance } = req.body;
-  console.log(req.body)
+  console.log(balance)
   const user = User.findByIdAndUpdate(req.params.userId, {balance: balance}, {new: true}).then(user => {
-      return res.status(200).json({ message: `Your balance is now ${user.balance}` });
+      return res.status(200).json(user.balance) //({ message: `Your balance is now ${user.balance}` });
   }).catch(error => {
     console.log(error);
   })
