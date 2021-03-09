@@ -65,23 +65,45 @@ router.post("/:userId/position/open/:ticker", (req, res, next) => {
 /* close position for a given stock ticker */
 
 //Find the position associated with the user. There could be other positions with the same ticker for other users
+// router.post("/:userId/position/close/:ticker", (req, res, next) => {
+//   const position = Position.find({ ticker: req.params.ticker }).then(position => {
+//     const user = User.findByIdAndUpdate(req.params.userId, {
+//       "$pull" : { "holdings": position[0]._id}
+//     }, {new: true}).then(user => {
+//         Position.deleteOne({ ticker: req.params.ticker }).then(position => {
+//           res.status(200).json({ message: 'Position closed successfully'})
+//         }).catch(err => {
+//           console.log("Error while deleting position: ", err);
+//         })
+//     }).catch(err => {
+//       console.log("Error while updating the user to remove position: ", err);
+//     })
+//   }).catch(err => {
+//     console.log("Error while deleting a position: ", err);
+//   });
+//  })
+
+/* close position for a given stock ticker */
 router.post("/:userId/position/close/:ticker", (req, res, next) => {
-  const position = Position.find({ ticker: req.params.ticker }).then(position => {
-    const user = User.findByIdAndUpdate(req.params.userId, {
-      "$pull" : { "holdings": position[0]._id}
-    }, {new: true}).then(user => {
-        Position.deleteOne({ ticker: req.params.ticker }).then(position => {
-          res.status(200).json({ message: 'Position closed successfully'})
-        }).catch(err => {
-          console.log("Error while deleting position: ", err);
-        })
-    }).catch(err => {
-      console.log("Error while updating the user to remove position: ", err);
+
+  const user = User.findById(req.params.userId).populate('holdings').then(user => {
+    let position = user.holdings.filter(position => {
+      return (position.ticker === req.params.ticker)
+    })
+    Position.findByIdAndDelete(position[0]._id).then(deletedPosition => {
+      User.findByIdAndUpdate(req.params.userId, {
+              "$pull" : { "holdings": position[0]._id}
+            }, {new: true}).then(user => {
+              res.status(200).json({ message: 'Position closed successfully'});
+            }).catch(err => {
+              console.log("Error while finding a user by Id in close position: ", err)
+            })
     })
   }).catch(err => {
-    console.log("Error while deleting a position: ", err);
-  });
+    console.log("Error while finding a user by ID in close position: ", err);
+  })
  })
+
 
 /* update position for a given stock ticker */
 router.post("/:userId/position/update/:ticker", (req, res, next) => {
