@@ -7,13 +7,18 @@ const router = require("express").Router();
 
 /* route to retrieve the user's portfolio */
 router.get("/:userId/portfolio", (req, res, next) => {
-  res.json("Retrieve user's portfolio");
+  // res.json("Retrieve user's portfolio");
+  const user = User.findById(req.params.userId).populate('holdings').then(user => {
+    return res.status(200).json(user.holdings);
+  }).catch(error => {
+    console.log(error);
+  })
 });
 
 /* route to update the user's portfolio */
-router.post("/:userId/portfolio", (req, res, next) => {
-  res.json("Update user's portfolio");
-});
+// router.post("/:userId/portfolio", (req, res, next) => {
+//   res.json("Update user's portfolio");
+// });
 
 /* route to retrieve the user's balance */
 router.get("/:userId/balance", (req, res, next) => {
