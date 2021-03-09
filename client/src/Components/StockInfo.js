@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 
 export default class StockInfo extends Component {
 
+  /* Reused from https://stackoverflow.com/a/55987576 */
   formatCash(n) {
     if (n < 1e3) return n;
     if (n >= 1e3 && n < 1e6) return +(n / 1e3).toFixed(1) + "K";
