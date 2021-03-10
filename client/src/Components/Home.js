@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Searchbar from './Searchbar';
 import Portfolio from './Portfolio';
+import PieChart from './PieChart';
 
 export default class Home extends Component {
 
@@ -22,7 +23,7 @@ export default class Home extends Component {
                 <Portfolio user={this.props.user}/>
               </div>           
               <div class="col">
-                <Portfolio user={this.props.user}/>
+                <PieChart user={this.props.user}/>
               </div>
             </div>
             <div class="row">

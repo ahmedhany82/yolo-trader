@@ -93,9 +93,9 @@ export default class StockDetails extends Component {
         }, () => {
           const { data, labels } = this.state;
           const maxYValue = Math.max(...data);
-          if(this.myChart) {this.myChart.destroy()}; /* Destroy previous chart if it exists */
+          if(this.state.myChart) {this.state.myChart.destroy()}; /* Destroy previous chart if it exists */
           
-          this.myChart = new Chart(this.state.myChartRef, {
+          this.state.myChart = new Chart(this.state.myChartRef, {
             type: "line",
             data: {
                 labels: labels,
