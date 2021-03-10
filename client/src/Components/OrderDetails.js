@@ -69,6 +69,7 @@ export default class OrderDetails extends Component {
                         <label htmlFor="limit">Limit</label>
                         <input className="form-control" style={{width:'90%', height: '25px', marginBottom: '20px'}}
                         type="number"
+                        step="0.01"
                         name="limit"
                         id="limit"
                         placeholder="Limit ($)"

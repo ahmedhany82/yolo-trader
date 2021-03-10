@@ -190,6 +190,7 @@ export default class StockDetails extends Component {
                     </div>
                     <div style={{width: '32vw', height: '10vh'}} className="d-flex flex-row justify-content-between align-items-center ml-5">
                       <h1>${this.state.latestPrice}</h1>
+                      {/* <h1>${this.state.lastPrice}</h1> */}
                       <div className="d-flex flex-row" style={{width: '21vw'}}>
                         <h4 style={(this.state.change < 0)? {color: 'red', marginRight: '5px'}: {color: 'green', marginRight: '5px'}}>{this.state.change}</h4>
                         <h4 style={(this.state.changePercent < 0)? {color: 'red'}: {color: 'green'}} >({this.state.changePercent}%)</h4>
@@ -218,7 +219,7 @@ export default class StockDetails extends Component {
                         ytdChange = {this.state.ytdChange}/>
                   </div>
               </div>
-              <div style={{width: "30vw"}} className="mt-3 d-flex flex-column justify-content-start align-items-center">
+              <div style={{maxWidth: "30vw"}} className="mt-3 d-flex flex-column justify-content-start align-items-center">
                 <div>
                   <button onClick={this.handleOrder} style={{width: "8vw"}} name="buy" type="button" className="btn btn-success btn-lg mr-2">Buy</button>
                   <button onClick={this.handleOrder} style={{width: "8vw"}} name="sell" type="button" className="btn btn-danger btn-lg">Sell</button>

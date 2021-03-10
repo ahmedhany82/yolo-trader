@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import Searchbar from './Searchbar';
 import Portfolio from './Portfolio';
 import PieChart from './PieChart';
+import MostActive from './MostActive';
+import News from './News';
 
 import { getPortfolio, getbalance } from '../services/order';
 import axios from 'axios';
@@ -13,6 +15,15 @@ export default class Home extends Component {
     portfolio: [],
     symbolsPrice: {},
     balance: 0
+  }
+
+  /* Reused from https://stackoverflow.com/a/55987576 */
+  formatCash(n) {
+    if (n < 1e3) return n;
+    if (n >= 1e3 && n < 1e6) return +(n / 1e3).toFixed(1) + "K";
+    if (n >= 1e6 && n < 1e9) return +(n / 1e6).toFixed(1) + "M";
+    if (n >= 1e9 && n < 1e12) return +(n / 1e9).toFixed(1) + "B";
+    if (n >= 1e12) return +(n / 1e12).toFixed(1) + "T";
   }
 
   componentDidMount() {      
@@ -52,6 +63,7 @@ export default class Home extends Component {
 
 
   render() {
+    let formattedBalance = this.formatCash(this.state.balance);
     return (
       <div className="container-fluid">
         {this.props.user ? (
@@ -60,7 +72,7 @@ export default class Home extends Component {
               <div className="col">
                 <div className="d-flex flex-row justify-content-between align-items-center ml-1 mr-2">
                   <h3 className="ml-3">Welcome {this.props.user.username}</h3>
-                  <h4>Balance: ${this.state.balance}</h4>
+                  <h4>Balance: ${formattedBalance}</h4>
                 </div>
                 <Searchbar user={this.props.user}/>
               </div>
@@ -75,10 +87,11 @@ export default class Home extends Component {
             </div>
             <div className="row">
               <div className="col">
-                <Portfolio user={this.props.user}/>
+                <MostActive/>
               </div>           
               <div className="col">
-                <Portfolio user={this.props.user}/>
+                {/* <Portfolio user={this.props.user}/> */}
+                <News style={{maxWidth: "35vw"}} ticker={'TSLA'} flag={true}/>
               </div>
             </div>            
           </>
