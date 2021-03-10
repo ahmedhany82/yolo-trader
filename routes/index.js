@@ -8,7 +8,7 @@ const router = require("express").Router();
 /* route to retrieve the user's portfolio */
 router.get("/:userId/portfolio", (req, res, next) => {
   // res.json("Retrieve user's portfolio");
-  const user = User.findById(req.params.userId).populate('holdings').then(user => {
+  const user = User.findById(req.params.userId).lean().populate('holdings').then(user => {
     return res.status(200).json(user.holdings);
   }).catch(error => {
     console.log(error);

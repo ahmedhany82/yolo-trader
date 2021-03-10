@@ -191,7 +191,6 @@ export default class StockDetails extends Component {
                     </div>
                     <div style={{width: '32vw', height: '10vh'}} className="d-flex flex-row justify-content-between align-items-center ml-5">
                       <h1>${this.state.latestPrice}</h1>
-                      {/* <h1>${this.state.lastPrice}</h1> */}
                       <div className="d-flex flex-row" style={{width: '21vw'}}>
                         <h4 style={(this.state.change < 0)? {color: 'red', marginRight: '5px'}: {color: 'green', marginRight: '5px'}}>{this.state.change}</h4>
                         <h4 style={(this.state.changePercent < 0)? {color: 'red'}: {color: 'green'}} >({this.state.changePercent}%)</h4>
