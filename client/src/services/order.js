@@ -96,6 +96,14 @@ const getPortfolio = (userId) => {
   })
 }
 
+const getbalance = (userId) => {
+  return axios.get(`/api/${userId}/balance`).then(res => {
+    return(res.data);
+  }).catch(err => {
+    console.lof(err);
+  })
+}
 
 
-export { placeOrder, getPortfolio};
+
+export { placeOrder, getPortfolio, getbalance};
