@@ -9,7 +9,6 @@ export default class MostActive extends Component {
 
   componentDidMount() {
     axios.get(`https://${process.env.REACT_APP_URL_KEY}.iexapis.com/stable/stock/market/list/mostactive?listLimit=3&token=${process.env.REACT_APP_IEXTEST_KEY}`).then(response => {
-      console.log(response.data)
       this.setState({
         mostactive: response.data
       })
@@ -22,7 +21,6 @@ export default class MostActive extends Component {
   render() {
     if(this.state.mostactive.length === 0) {return <h1>Loading...</h1>}
     const activeList = this.state.mostactive.map((element,index) => {
-      console.log(element.symbol)
       return (
         <div key={index} className="d-flex flex-row justify-content-between alig-self-start ml-3 mr-3 pl-3 pr-3 pb-0 pt-0">
             <div className="d-flex flex-column justify-content-start align-self-center">

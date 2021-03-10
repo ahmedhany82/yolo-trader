@@ -4,7 +4,7 @@ import Searchbar from './Searchbar';
 import Portfolio from './Portfolio';
 import PieChart from './PieChart';
 import MostActive from './MostActive';
-import News from './News';
+import NewsHomePage from './NewsHomePage';
 
 import { getPortfolio, getbalance } from '../services/order';
 import axios from 'axios';
@@ -91,7 +91,7 @@ export default class Home extends Component {
               </div>           
               <div className="col">
                 {/* <Portfolio user={this.props.user}/> */}
-                <News style={{maxWidth: "35vw"}} ticker={'TSLA'} flag={true}/>
+                <NewsHomePage user={this.props.user}/>
               </div>
             </div>            
           </>

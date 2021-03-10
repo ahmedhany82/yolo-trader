@@ -34,7 +34,7 @@ export default class News extends Component {
         return (
           <div key={index} className="mt-3 mb-3">
               {/* <div style={{maxWidth: '30vw'}} className="d-flex flex-row justify-content-start"> */}
-              <div style={{Width: '30vw'}} className="d-flex flex-row justify-content-start">
+              <div style={{width: '30vw'}} className="d-flex flex-row justify-content-start">
                   <img style={{height: "8vh", width: "8vw"}} className="ml-5 mr-2" src={article.image} alt=""/>
                   <div className="d-flex flex-column justify-content-center align-self-center">
                       <a href={article.url} target="_blank" rel="noreferrer"><h5>{article.headline}</h5></a>
