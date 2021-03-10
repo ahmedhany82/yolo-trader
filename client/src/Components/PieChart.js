@@ -11,11 +11,9 @@ export default class PieChart extends Component {
 
 
   componentDidMount() {
-    console.log("PieChart component did mount")
-    console.log(this.props)
     this.setState({
       myChartRef: this.chartRef.current.getContext("2d")
-    }, ()=>{console.log("This is myChartRef: ", this.state.myChartRef)})
+    })
 
     // this.state.myChartRef = this.chartRef.current.getContext("2d");
 
@@ -53,7 +51,6 @@ export default class PieChart extends Component {
 
 
   render() {
-    console.log("This is myChartRef from render: ", this.state.myChartRef)
     if(this.state.myChartRef && this.props.symbolsPrice && this.props.portfolio.length !== 0) 
     {
       const labels = Object.keys(this.props.symbolsPrice);  

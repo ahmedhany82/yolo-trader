@@ -151,7 +151,6 @@ export default class StockDetails extends Component {
   componentWillUnmount() {
     let symbol = this.state.symbol;
     this.state.socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}));
-    alert('The component is going to be unmounted');
   }
 
   handleChartChange = event => {
@@ -200,7 +199,7 @@ export default class StockDetails extends Component {
                   </div>
                   <div style={{width: "70vw"}}>
                     <div className="d-flex justify-content-end">
-                      <div style={{width: "15vw"}} class="btn-group me-2" role="group" aria-label="Second group">
+                      <div style={{width: "15vw"}} className="btn-group me-2" role="group" aria-label="Second group">
                           <button onClick={this.handleChartChange} name="1d" type="button" className="btn btn-secondary">1D</button>
                           <button onClick={this.handleChartChange} name="1m" type="button" className="btn btn-secondary">1M</button>
                           <button onClick={this.handleChartChange} name="ytd" type="button" className="btn btn-secondary">YTD</button>

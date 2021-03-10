@@ -41,7 +41,6 @@ export default class Home extends Component {
         })
 
         getbalance(this.props.user._id).then(res => {
-          console.log(res);
           this.setState({
             balance: res
           })
@@ -57,26 +56,28 @@ export default class Home extends Component {
       <div className="container-fluid">
         {this.props.user ? (
           <>
-            <div class="row">
-              <div class="col">
-                <h3 className="ml-3">Welcome {this.props.user.username}</h3>
-                <h4>Balance: ${this.state.balance}</h4>
+            <div className="row">
+              <div className="col">
+                <div className="d-flex flex-row justify-content-between align-items-center ml-1 mr-2">
+                  <h3 className="ml-3">Welcome {this.props.user.username}</h3>
+                  <h4>Balance: ${this.state.balance}</h4>
+                </div>
                 <Searchbar user={this.props.user}/>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
+            <div className="row">
+              <div className="col">
                 <Portfolio user={this.props.user} portfolio={this.state.portfolio} symbolsPrice={this.state.symbolsPrice}/>
               </div>           
-              <div class="col">
+              <div className="col">
                 <PieChart user={this.props.user} portfolio={this.state.portfolio} symbolsPrice={this.state.symbolsPrice}/>
               </div>
             </div>
-            <div class="row">
-              <div class="col">
+            <div className="row">
+              <div className="col">
                 <Portfolio user={this.props.user}/>
               </div>           
-              <div class="col">
+              <div className="col">
                 <Portfolio user={this.props.user}/>
               </div>
             </div>            

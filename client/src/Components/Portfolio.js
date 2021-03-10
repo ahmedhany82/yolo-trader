@@ -1,6 +1,6 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { Component } from 'react'
-import { getPortfolio } from '../services/order';
+// import { getPortfolio } from '../services/order';
 
 export default class Portfolio extends Component {
 
@@ -87,7 +87,7 @@ export default class Portfolio extends Component {
     return (
       <div style={{width: "45vw", height: "35vh" }} className="ml-3 border p-3 border-primary shadow p-3 mb-5 bg-body rounded">
         <h4 className="ml-3" style={{width: "40vw", position: 'relative', zIndex: '1'}}>Portfolio</h4>
-        <table style={{width: "40vw", position: 'relative', textAlign: 'center'}} class="table table-hover table-sm ml-3 ">
+        <table style={{width: "40vw", position: 'relative', textAlign: 'center'}} className="table table-hover table-sm ml-3 ">
             <thead>
               <tr>
                 <th scope="col">Symbol</th>

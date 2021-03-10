@@ -20,7 +20,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log("App render is called")
     return (
       <div>
         <Navbar user={this.state.user} setUser={this.setUser} />

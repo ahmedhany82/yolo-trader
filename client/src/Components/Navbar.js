@@ -9,7 +9,6 @@ const handleLogout = props => {
 }
 
 export default function Navbar(props) {
-  console.log(props.user)
   return (
     <div className="navbar navbar-dark bg-primary mb-3">
       <div className="container-fluid">
