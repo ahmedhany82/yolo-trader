@@ -90,7 +90,6 @@ export default class Home extends Component {
                 <MostActive/>
               </div>           
               <div className="col">
-                {/* <Portfolio user={this.props.user}/> */}
                 <NewsHomePage user={this.props.user}/>
               </div>
             </div>            

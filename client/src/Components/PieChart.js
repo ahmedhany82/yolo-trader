@@ -9,46 +9,11 @@ export default class PieChart extends Component {
     myChartRef: undefined,
   }
 
-
   componentDidMount() {
     this.setState({
       myChartRef: this.chartRef.current.getContext("2d")
     })
-
-    // this.state.myChartRef = this.chartRef.current.getContext("2d");
-
-    // const labels = Object.keys(this.props.symbolsPrice);  
-    // const valueArray = this.props.portfolio.map(element => {
-    //   return ((element.count) * this.props.symbolsPrice[element.ticker])
-    // })
-    // const sum = valueArray.reduce((a, b) => a + b, 0);
-    // const data = valueArray.map(element => {
-    //   return ((element / sum)*100).toFixed(2);
-    // })
-    // console.log(valueArray)
-    // console.log(sum)
-    // console.log(data)
-    // if(this.state.myChart) {this.state.myChart.destroy()};
-    // this.state.myChart = new Chart(this.state.myChartRef, {
-    //   type: "pie",
-    //   data: {
-    //       datasets: [
-    //           {
-    //             data: data,
-    //             backgroundColor: [ 'red', 'green', 'blue']
-    //           }
-    //       ],
-    //       labels: labels
-    //   },
-    //   options: {
-    //     responsive: true,
-    //     maintainAspectRatio: false,
-    //   }
-    // });
   }
-
-
-
 
   render() {
     if(this.state.myChartRef && this.props.symbolsPrice && this.props.portfolio.length !== 0) 
@@ -68,7 +33,6 @@ export default class PieChart extends Component {
         return('rgb(' + r + ', ' + g + ', ' + b + ')')
       })
 
-      // if(this.state.myChart) {this.state.myChart.destroy()}
       this.state.myChart = new Chart(this.state.myChartRef, {
         type: "pie",
         data: {
