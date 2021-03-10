@@ -63,14 +63,14 @@ export default class Portfolio extends Component {
     //   )
     // }) : [];
 
-    const portfolioList = (this.props.portfolio && this.props.portfolio.length !== 0)? this.props.portfolio.map(element => {
+    const portfolioList = (this.props.portfolio && this.props.portfolio.length !== 0)? this.props.portfolio.map((element,index) => {
       let value = (element.count * this.props.symbolsPrice[element.ticker]).toFixed(2);
       let formattedValue = this.formatCash(value);
       let change = (value - (element.count * element.averagePrice)).toFixed(2);
       let absoluteChange = Math.abs(change);
       let profitloss = (((value - (element.count * element.averagePrice))/(element.count * element.averagePrice)) *100).toFixed(2) ;
       return (
-        <tr>
+        <tr key={index}>
           <th scope="row">{element.ticker}</th>
           <td>{element.count}</td>
           <td>{this.props.symbolsPrice[element.ticker]}</td>

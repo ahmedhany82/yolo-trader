@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 export default function SearchResults(props) {
 
 
-  let tickersList = props.tickers? props.tickers.map(ticker => {
+  let tickersList = props.tickers? props.tickers.map((ticker,index) => {
       return (
-          <div>
+          <div key={index}>
             <Link to={`/symbols/${ticker['1. symbol']}`} ><p>{ticker['1. symbol']}</p></Link>
             <p style={{color: "grey"}}>{ticker['2. name']}</p>
           </div>

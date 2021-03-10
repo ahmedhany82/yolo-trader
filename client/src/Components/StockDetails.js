@@ -28,18 +28,18 @@ export default class StockDetails extends Component {
     labels: [],
     data: [],
     chartRange: 'ytd',
-    lastPrice: undefined, //this is last trade use https://finnhub.io/api/v1/quote?symbol=SPCE&token= for closing price
-    socket: new WebSocket(`wss://ws.finnhub.io?token=${process.env.REACT_APP_FINNHUB_KEY}`),
+    // lastPrice: undefined, //this is last trade use https://finnhub.io/api/v1/quote?symbol=SPCE&token= for closing price
+    // socket: new WebSocket(`wss://ws.finnhub.io?token=${process.env.REACT_APP_FINNHUB_KEY}`),
     displayOrderComponent: false,
     orderType: undefined
   }
 
   componentDidMount() {
 
-    console.log("Component did mount is called")
-
-    // const myChartRef = this.chartRef.current.getContext("2d");
-    this.state.myChartRef = this.chartRef.current.getContext("2d");
+    // this.state.myChartRef = this.chartRef.current.getContext("2d");
+    this.setState({
+      myChartRef: this.chartRef.current.getContext("2d")
+    })
     
     axios.get(`https://${process.env.REACT_APP_URL_KEY}.iexapis.com/stable/stock/${this.state.ticker}/quote?displayPercent=true&token=${process.env.REACT_APP_IEXTEST_KEY}`).then(response => {
       const data = response.data;
@@ -63,20 +63,20 @@ export default class StockDetails extends Component {
 
     this.chartUpdate();
 
-    this.state.socket.onopen = () => {
-      this.state.socket.send(JSON.stringify({'type':'subscribe', 'symbol': `${this.state.ticker}`}));
-    };
+    // this.state.socket.onopen = () => {
+    //   this.state.socket.send(JSON.stringify({'type':'subscribe', 'symbol': `${this.state.ticker}`}));
+    // };
 
-    this.state.socket.onmessage = event => {
-        if(JSON.parse(event.data)['data'] !== undefined) {
-          JSON.parse(event.data)['data'].map(element => {
-            let price = element.p;
-            this.setState({
-              lastPrice: price.toFixed(2),
-            });
-          });  
-      }
-    };
+    // this.state.socket.onmessage = event => {
+    //     if(JSON.parse(event.data)['data'] !== undefined) {
+    //       JSON.parse(event.data)['data'].map(element => {
+    //         let price = element.p;
+    //         this.setState({
+    //           lastPrice: price.toFixed(2),
+    //         });
+    //       });  
+    //   }
+    // };
  }
 
   chartUpdate() {
@@ -122,7 +122,7 @@ export default class StockDetails extends Component {
                   xAxes: [{
                       display: false,
                       ticks: {
-                          display: false //this will remove only the label
+                          display: false
                       }
                   }],
                   yAxes: [{
@@ -131,27 +131,19 @@ export default class StockDetails extends Component {
                      }
                    }]
               }
-                // scales: {
-                //   xAxes: [{
-                //     type: 'time',
-                //     ticks: {
-                //         autoSkip: true,
-                //         maxTicksLimit: 20
-                //     }
-                // }]
-                // }
             }
           });
+
         })
       }).catch(err => {
         console.log(err)
       })
   }
 
-  componentWillUnmount() {
-    let symbol = this.state.symbol;
-    this.state.socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}));
-  }
+  // componentWillUnmount() {
+  //   let symbol = this.state.symbol;
+  //   this.state.socket.send(JSON.stringify({'type':'unsubscribe','symbol': symbol}));
+  // }
 
   handleChartChange = event => {
     const range = event.target.name;
@@ -164,7 +156,6 @@ export default class StockDetails extends Component {
 
   handleOrder = event => {
     const orderType = event.target.name;
-    console.log(orderType)
     this.setState({
       displayOrderComponent: true,
       orderType: orderType
