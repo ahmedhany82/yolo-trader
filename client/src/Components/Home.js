@@ -82,12 +82,12 @@ export default class Home extends Component {
                 <Portfolio user={this.props.user} portfolio={this.state.portfolio} symbolsPrice={this.state.symbolsPrice}/>
               </div>           
               <div className="col">
-                <PieChart user={this.props.user} portfolio={this.state.portfolio} symbolsPrice={this.state.symbolsPrice}/>
+                <MostActive/>
               </div>
             </div>
             <div className="row">
               <div className="col">
-                <MostActive/>
+                <PieChart user={this.props.user} portfolio={this.state.portfolio} symbolsPrice={this.state.symbolsPrice}/>
               </div>           
               <div className="col">
                 <NewsHomePage user={this.props.user}/>
