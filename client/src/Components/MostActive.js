@@ -19,7 +19,14 @@ export default class MostActive extends Component {
 
 
   render() {
-    if(this.state.mostactive.length === 0) {return <h1>Loading...</h1>}
+    if(this.state.mostactive.length === 0) {
+      // return <h1>Loading...</h1>
+      return <div style={{height: "35vh"}} class="d-flex justify-content-center align-items-center">
+        <div class="spinner-border text-info" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>      
+    }
     const activeList = this.state.mostactive.map((element,index) => {
       return (
         <div key={index} className="d-flex flex-row justify-content-between alig-self-start ml-3 mr-3 pl-3 pr-3 pb-0 pt-0">

@@ -58,7 +58,8 @@ export default class OrderDetails extends Component {
       
       if(this.props.flag) {
       return (
-        <div style={{width: '23vw'}} className="mt-3 border p-3 border-primary shadow p-3 mb-5 bg-body rounded">
+        // <div style={{width: '23vw'}} className="ml-5 mt-3 border p-3 border-primary shadow p-3 mb-5 bg-body rounded">
+        <div style={{width: '25vw'}} className="ml-5 mr-5 mt-3 border p-3 border-primary shadow mb-5 bg-body rounded">
           <div className="d-flex flex-row justify-content-between align-items-start">
             
             <h3 className="mt-3 mb-4">Place an order</h3>

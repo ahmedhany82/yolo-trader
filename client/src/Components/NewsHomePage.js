@@ -29,7 +29,13 @@ export default class NewsHomePage extends Component {
     }
 
   render() {
-      if(this.state.news.length === 0) {return <h1>Loading...</h1>}
+      if(this.state.news.length === 0) {
+        return <div style={{height: "35vh"}} class="d-flex justify-content-center align-items-center">
+        <div class="spinner-border text-info" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      }
       let newsList = this.state.news.map((article,index) => {
         return (
           <div key={index}>
