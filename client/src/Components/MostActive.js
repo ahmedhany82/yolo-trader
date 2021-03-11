@@ -8,7 +8,7 @@ export default class MostActive extends Component {
   }
 
   componentDidMount() {
-    axios.get(`https://${process.env.REACT_APP_URL_KEY}.iexapis.com/stable/stock/market/list/mostactive?listLimit=3&token=${process.env.REACT_APP_IEXTEST_KEY}`).then(response => {
+    axios.get(`https://${process.env.REACT_APP_URL_KEY}.iexapis.com/stable/stock/market/list/iexvolume?listLimit=3&token=${process.env.REACT_APP_IEXTEST_KEY}`).then(response => {
       this.setState({
         mostactive: response.data
       })
@@ -35,8 +35,8 @@ export default class MostActive extends Component {
               <p style={{color: "grey"}}>{element.companyName}</p>
             </div>
             <div className="d-flex flex-column justify-content-start align-self-center">
-              <p className="mb-0">${element.latestPrice}</p>
-              <p  style={(element.changePercent < 0)? {color: 'red'}: {color: 'green'}} >{element.changePercent > 0? '+': '-'}{Math.abs(element.changePercent.toFixed(2))}%</p>              
+              <p className="mb-0">${(element.latestPrice != null)? element.latestPrice: ' N/A'}</p>
+              <p  style={(element.changePercent > 0)? {color: 'green'}: {color: 'red'}} >{ (element.changePercent != null)? (element.changePercent > 0? '+': '-') : ''}{(element.changePercent !== null)? Math.abs(element.changePercent.toFixed(2)): `NA `}%</p>              
             </div>
         </div>
         )
