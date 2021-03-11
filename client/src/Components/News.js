@@ -17,7 +17,7 @@ export default class News extends Component {
     // }).catch(err => {
     //   console.log("Error while fetching the news from API", err);
     // });
-    axios.get(`https://finnhub.io/api/v1/company-news?symbol=${ticker}&from=2021-03-08&to=2021-03-09&token=c0uhttn48v6r6g5764c0`, { json: true }).then(res => {
+    axios.get(`https://finnhub.io/api/v1/company-news?symbol=${ticker}&from=2021-03-08&to=2021-03-09&token=${process.env.REACT_APP_FINNHUB_KEY}`, { json: true }).then(res => {
         this.setState({
           news: res.data.slice(0,3)
         })

@@ -14,19 +14,49 @@ export default class NewsHomePage extends Component {
             const symbols = portfoliofromDB.map(element => {
               return element.ticker;
             })
-            const ticker = symbols[Math.floor(Math.random() * symbols.length)]
-            axios.get(`https://finnhub.io/api/v1/company-news?symbol=${ticker}&from=2021-03-08&to=2021-03-09&token=c0uhttn48v6r6g5764c0`, { json: true }).then(res => {
+            if(symbols.length !== 0) {
+              const ticker = symbols[Math.floor(Math.random() * symbols.length)]
+              axios.get(`https://finnhub.io/api/v1/company-news?symbol=${ticker}&from=2021-03-08&to=2021-03-09&token=${process.env.REACT_APP_FINNHUB_KEY}`, { json: true }).then(res => {
+                  this.setState({
+                    news: res.data.slice(0,2)
+                  })
+                }).catch(err => {
+                  console.log("Error while fetching the news from API", err);
+                });  
+            } else {
+              axios.get(`https://finnhub.io/api/v1/news?category=general&token=${process.env.REACT_APP_FINNHUB_KEY}`, { json: true }).then(res => {
                 this.setState({
                   news: res.data.slice(0,2)
                 })
               }).catch(err => {
                 console.log("Error while fetching the news from API", err);
               });
+            }
           }).catch(err => {
             console.log(err);
           })
-        }
+        }  
     }
+
+    // componentDidMount() {      
+    //   if(this.props.user) {
+    //       getPortfolio(this.props.user._id).then(portfoliofromDB => {
+    //         const symbols = portfoliofromDB.map(element => {
+    //           return element.ticker;
+    //         })
+    //         const ticker = symbols[Math.floor(Math.random() * symbols.length)]
+    //         axios.get(`https://finnhub.io/api/v1/company-news?symbol=${ticker}&from=2021-03-08&to=2021-03-09&token=${process.env.REACT_APP_FINNHUB_KEY}`, { json: true }).then(res => {
+    //             this.setState({
+    //               news: res.data.slice(0,2)
+    //             })
+    //           }).catch(err => {
+    //             console.log("Error while fetching the news from API", err);
+    //           });
+    //       }).catch(err => {
+    //         console.log(err);
+    //       })
+    //     }
+    // }
 
   render() {
       if(this.state.news.length === 0) {

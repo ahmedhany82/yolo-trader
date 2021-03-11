@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-
+import { Link } from 'react-router-dom';
 
 export default class Portfolio extends Component {
 
@@ -23,7 +23,8 @@ export default class Portfolio extends Component {
       let profitloss = (((value - (element.count * element.averagePrice))/(element.count * element.averagePrice)) *100).toFixed(2) ;
       return (
         <tr key={index}>
-          <th scope="row">{element.ticker}</th>
+          {/* <th scope="row">{element.ticker}</th> */}
+          <th scope="row"><Link to={`/symbols/${element.ticker}`}><p>{element.ticker}</p></Link></th>
           <td>{element.count}</td>
           <td>{this.props.symbolsPrice[element.ticker]}</td>
           <td>{formattedValue}</td>

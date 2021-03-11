@@ -100,7 +100,7 @@ const getbalance = (userId) => {
   return axios.get(`/api/${userId}/balance`).then(res => {
     return(res.data);
   }).catch(err => {
-    console.lof(err);
+    console.log(err);
   })
 }
 

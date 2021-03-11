@@ -21,7 +21,6 @@ router.post('/signup', (req, res, next) => {
         // hash the password, create the user and send the user to the client
         const salt = bcrypt.genSaltSync();
         const hash = bcrypt.hashSync(password, salt);
-
         User.create({
           username: username,
           password: hash
@@ -30,6 +29,7 @@ router.post('/signup', (req, res, next) => {
             // login with passport:
             req.login(dbUser, err => {
               if (err) {
+                console.log("err: ", err)
                 return res.status(500).json({ message: 'Error while attempting to login' })
               }
               // we don't redirect to an html page anymore, we just send the user obj to the client
@@ -37,6 +37,7 @@ router.post('/signup', (req, res, next) => {
             });
           })
           .catch(err => {
+            console.log("Error while creating user in signup backend: ", err)
             res.json(err);
           })
       }

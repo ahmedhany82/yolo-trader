@@ -9,12 +9,6 @@ const userSchema = new Schema({
   password: String,
   firstname: String,
   lastname: String,
-  email: { 
-    type: String,
-    unique: true,
-    trim: true,
-    lowercase: true
-  },
   holdings: [
     {
       type: Schema.Types.ObjectId,
@@ -23,7 +17,7 @@ const userSchema = new Schema({
   ],
   balance: {
     type: Number,
-    default: 1000
+    default: 100000
   }
 });
 

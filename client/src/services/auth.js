@@ -6,6 +6,7 @@ const signup = (username, password) => {
       return response.data
     })
     .catch(err => {
+      console.log("error on signup", err);
       return err.response.data
     })
 }
