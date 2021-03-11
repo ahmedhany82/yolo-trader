@@ -24,22 +24,22 @@ export default class Portfolio extends Component {
       return (
         <tr key={index}>
           {/* <th scope="row">{element.ticker}</th> */}
-          <th scope="row"><Link to={`/symbols/${element.ticker}`}><p>{element.ticker}</p></Link></th>
-          <td>{element.count}</td>
-          <td>{this.props.symbolsPrice[element.ticker]}</td>
-          <td>{formattedValue}</td>
-          <td style={(profitloss < 0)? {color: 'red'}: {color: 'green'}}>{profitloss}%</td>
-          <td style={(change < 0)? {color: 'red'}: {color: 'green'}}>{change > 0? '+': '-'}{absoluteChange}</td>
+          <th scope="row"><Link to={`/symbols/${element.ticker}`}><p style={{color: 'white'}} className="fw-bolder">{element.ticker}</p></Link></th>
+          <td style={{color: 'white'}}>{element.count}</td>
+          <td style={{color: 'white'}}>{this.props.symbolsPrice[element.ticker]}</td>
+          <td style={{color: 'white'}}>{formattedValue}</td>
+          <td style={(profitloss < 0)? {color: '#ff0000'}: {color: '#00ff00'}}>{profitloss}%</td>
+          <td style={(change < 0)? {color: '#ff0000'}: {color: '#00ff00'}}>{change > 0? '+': '-'}{absoluteChange}</td>
         </tr>
       )
     }) : [];
 
     return (
-      <div style={{width: "45vw", height: "35vh" }} className="ml-3 border p-3 border-primary shadow p-3 mb-5 bg-body rounded">
-        <h4 className="ml-3" style={{width: "40vw", position: 'relative', zIndex: '1'}}>Portfolio</h4>
+      <div style={{width: "45vw", height: "auto"  }} className="ml-3 border p-3 border-white shadow p-3 mb-5 bg-body rounded">
+        <h4 className="ml-3 mb-3" style={{width: "40vw", position: 'relative', zIndex: '1'}}>Portfolio</h4>
         <table style={{width: "40vw", position: 'relative', textAlign: 'center'}} className="table table-hover table-sm ml-3 ">
             <thead>
-              <tr>
+              <tr style={{color: 'white'}}>
                 <th scope="col">Symbol</th>
                 <th scope="col">Position</th>
                 <th scope="col">Last Price</th>

@@ -32,9 +32,10 @@ export default class PieChart extends Component {
         let b = Math.floor(Math.random() * 200);
         return('rgb(' + r + ', ' + g + ', ' + b + ')')
       })
+      console.log(colorsArray)
 
       this.state.myChart = new Chart(this.state.myChartRef, {
-        type: "pie",
+        type: "doughnut",
         data: {
             datasets: [
                 {
@@ -46,15 +47,21 @@ export default class PieChart extends Component {
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false,
+          maintainAspectRatio: true,
+          legend: {
+            labels: {
+              fontColor: "white",
+              fontSize: 18
+            }
+          }
         }
       });
     }
 
     return (
-      <div style={{width: "45vw", height: "35vh"}} className="ml-3 border p-3 border-primary shadow p-3 mb-5 bg-body rounded">
-        <h4>Portfolio Distribution %</h4>
-        <div >
+      <div style={{width: "45vw", height: "auto"}} className="ml-3 border p-3 border-white shadow p-3 mb-5 bg-body rounded">
+        <h4 className='mb-3'>Portfolio Distribution %</h4>
+        <div>
             <canvas style={{width: "40vw", height: "23vh"}} id="myChart" ref={this.chartRef}/>
         </div>
       </div>

@@ -35,7 +35,7 @@ export default class MostActive extends Component {
               <p style={{color: "grey"}}>{element.companyName}</p>
             </div>
             <div className="d-flex flex-column justify-content-start align-self-center">
-              <p className="mb-0">${(element.latestPrice != null)? element.latestPrice: ' N/A'}</p>
+              <p className="mb-0">${(element.latestPrice != null)? element.latestPrice.toFixed(2): ' N/A'}</p>
               <p  style={(element.changePercent > 0)? {color: 'green'}: {color: 'red'}} >{ (element.changePercent != null)? (element.changePercent > 0? '+': '-') : ''}{(element.changePercent !== null)? Math.abs(element.changePercent.toFixed(2)): `NA `}%</p>              
             </div>
         </div>
