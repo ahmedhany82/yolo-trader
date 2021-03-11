@@ -30,9 +30,9 @@ export default class News extends Component {
     if(this.props.flag) {
       if(this.state.news.length === 0) {
         //return <h1>Loading...</h1>
-        return <div style={{height: "30vh"}} class="d-flex justify-content-center align-items-center">
-        <div class="spinner-border text-info" role="status">
-          <span class="sr-only">Loading...</span>
+        return <div style={{height: "30vh"}} className="d-flex justify-content-center align-items-center">
+        <div className="spinner-border text-info" role="status">
+          <span className="sr-only">Loading...</span>
         </div>
         </div> 
       }

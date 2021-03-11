@@ -7,9 +7,8 @@ import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 
-// axios.defaults.baseURL = 'http://localhost:3000/'
 
-axios.get('api/auth/loggedin')
+axios.get('/api/auth/loggedin')
   .then(response => {
     const user = response.data;
     ReactDOM.render(
