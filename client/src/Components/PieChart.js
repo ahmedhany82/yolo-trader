@@ -59,7 +59,7 @@ export default class PieChart extends Component {
     }
 
     return (
-      <div style={{width: "45vw", height: "auto"}} className="ml-3 border p-3 border-white shadow p-3 mb-5 bg-body rounded">
+      <div style={{width: "45vw", height: "auto"}} className="ml-3 mr-4 border p-3 border-white shadow p-3 mb-5 bg-body rounded">
         <h4 className='mb-3'>Portfolio Distribution %</h4>
         <div>
             <canvas style={{width: "40vw", height: "23vh"}} id="myChart" ref={this.chartRef}/>

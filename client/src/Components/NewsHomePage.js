@@ -73,12 +73,12 @@ export default class NewsHomePage extends Component {
               <div style={{Width: '30vw'}} className="d-flex flex-row justify-content-start">
                   <img style={{height: "8vh", width: "8vw"}} className=" mr-2" src={article.image} alt=""/>
                   <div className="d-flex flex-column justify-content-center align-self-center">
-                      <a href={article.url} target="_blank" rel="noreferrer"><h5>{article.headline}</h5></a>
+                      <a href={article.url} target="_blank" rel="noreferrer"><h5 style={{color: 'lightblue'}}>{article.headline}</h5></a>
                       {/* <p>{article.source}</p> */}
                       <span style={{
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
-                        width: "15vw",
+                        width: "29vw",
                         height: "8vh",
                         display: "block",
                         overflow: "hidden"
@@ -89,7 +89,7 @@ export default class NewsHomePage extends Component {
           )
       })
       return (
-        <div style={{width: "45vw", height: "35vh"}} className="ml-3 border p-3 border-primary shadow p-3 mb-5 bg-body rounded">
+        <div style={{width: "45vw", height: "35vh"}} className="ml-3 border p-3 border-white shadow p-3 mb-5 bg-body rounded">
           <h4 className="mb-3">Portfolio News</h4>
           <div>
             {newsList}

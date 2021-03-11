@@ -31,19 +31,19 @@ export default class MostActive extends Component {
       return (
         <div key={index} className="d-flex flex-row justify-content-between alig-self-start ml-3 mr-3 pl-3 pr-3 pb-0 pt-0">
             <div className="d-flex flex-column justify-content-start align-self-center">
-              <p className="mb-0"><strong>{element.symbol}</strong></p>
+              <p style={{color: "white"}} className="mb-0"><strong>{element.symbol}</strong></p>
               <p style={{color: "grey"}}>{element.companyName}</p>
             </div>
             <div className="d-flex flex-column justify-content-start align-self-center">
               <p className="mb-0">${(element.latestPrice != null)? element.latestPrice.toFixed(2): ' N/A'}</p>
-              <p  style={(element.changePercent > 0)? {color: 'green'}: {color: 'red'}} >{ (element.changePercent != null)? (element.changePercent > 0? '+': '-') : ''}{(element.changePercent !== null)? Math.abs(element.changePercent.toFixed(2)): `NA `}%</p>              
+              <p style={(element.changePercent > 0)? {color: '#00ff00'}: {color: '#ff0000'}} ><strong>{(element.changePercent != null)? (element.changePercent > 0? '+': '-') : ''}{(element.changePercent !== null)? Math.abs(element.changePercent.toFixed(2)): `NA `}%</strong></p>              
             </div>
         </div>
         )
     })
     return (
-      <div style={{width: "45vw", height: "35vh"}} className="ml-3 border p-3 border-primary shadow p-3 mb-5 bg-body rounded">
-        <h4 className="ml-3 mb-4">Most Active</h4>
+      <div style={{width: "45vw", height: "35vh"}} className="ml-3 border p-3 border-white shadow p-3 mb-5 bg-body rounded">
+        <h4 style={{color: "white"}}className="ml-3 mb-4">Most Active</h4>
         <div className="mb-0 pt-0 pb-0">
             {activeList}
         </div>        

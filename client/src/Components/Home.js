@@ -65,14 +65,14 @@ export default class Home extends Component {
   render() {
     let formattedBalance = this.formatCash(this.state.balance);
     return (
-      <div className="container-fluid">
+      <div className="container-fluid pl-0 pr-0">
         {this.props.user ? (
           <div style={{backgroundColor: '#434756', color: 'white'}}>  
             <div className="row">
               <div className="col">
                 <div className="d-flex flex-row justify-content-between align-items-center ml-1 mr-2">
-                  <h3 className="ml-3">Welcome {this.props.user.username}</h3>
-                  <h4>Balance: ${formattedBalance}</h4>
+                  <h3 className="ml-3 mt-3">Welcome {this.props.user.username}</h3>
+                  <h4 className="mr-3 mt-3">Balance: ${formattedBalance}</h4>
                 </div>
                 <Searchbar user={this.props.user}/>
               </div>
@@ -81,7 +81,7 @@ export default class Home extends Component {
               <div className="col">
                 <Portfolio user={this.props.user} portfolio={this.state.portfolio} symbolsPrice={this.state.symbolsPrice}/>
               </div>           
-              <div className="col d-flex flex-row justify-content-center align-items-stretch">
+              <div className="col d-flex flex-row justify-content-start align-items-stretch">
                 <PieChart user={this.props.user} portfolio={this.state.portfolio} symbolsPrice={this.state.symbolsPrice}/>
               </div>
             </div>

@@ -28,8 +28,8 @@ export default class Portfolio extends Component {
           <td style={{color: 'white'}}>{element.count}</td>
           <td style={{color: 'white'}}>{this.props.symbolsPrice[element.ticker]}</td>
           <td style={{color: 'white'}}>{formattedValue}</td>
-          <td style={(profitloss < 0)? {color: '#ff0000'}: {color: '#00ff00'}}>{profitloss}%</td>
-          <td style={(change < 0)? {color: '#ff0000'}: {color: '#00ff00'}}>{change > 0? '+': '-'}{absoluteChange}</td>
+          <td style={(profitloss < 0)? {color: '#ff0000'}: {color: '#00ff00'}}><strong>{profitloss}%</strong></td>
+          <td style={(change < 0)? {color: '#ff0000'}: {color: '#00ff00'}}><strong>{change > 0? '+': '-'}{absoluteChange}</strong></td>
         </tr>
       )
     }) : [];
