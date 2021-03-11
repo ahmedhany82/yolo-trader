@@ -67,7 +67,7 @@ export default class Signup extends Component {
             <div>
               <button className="btn btn-light mt-4 mb-3" type="submit">Sign Up</button>
               {this.state.message && (
-                <h3>{this.state.message}</h3>
+                <h4 style={{color: 'white'}}>{this.state.message}</h4>
               )}
             </div>
         </div>

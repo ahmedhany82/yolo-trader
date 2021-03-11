@@ -89,9 +89,9 @@ export default class Login extends Component {
               />
             </div>
             <div>
-              <button className="btn btn-light mt-4 mb-3" type="submit">Sign Up</button>
+              <button className="btn btn-light mt-4 mb-3" type="submit">Log in</button>
               {this.state.message && (
-                <h3>{this.state.message}</h3>
+                <h4 style={{color: 'white'}}>{this.state.message}</h4>
               )}
             </div>
         </div>
