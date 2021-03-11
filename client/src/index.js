@@ -7,7 +7,6 @@ import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 
-axios.defaults.baseURL = '/api/';
 
 axios.get('/api/auth/loggedin')
   .then(response => {
