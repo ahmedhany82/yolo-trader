@@ -65,7 +65,7 @@ export default class Home extends Component {
   render() {
     let formattedBalance = this.formatCash(this.state.balance);
     return (
-      <div className="container-fluid pl-0 pr-0">
+      <div className="container-fluid pl-0 pr-0" style={{backgroundColor: '#434756'}}>
         {this.props.user ? (
           <div style={{backgroundColor: '#434756', color: 'white'}}>  
             <div className="row">
@@ -95,15 +95,15 @@ export default class Home extends Component {
             </div>            
           </div>
         ) : (
-            <div style={{height: '100%'}} className="d-flex flex-row justify-content-between align-items-center">
-              <div style={{height: '100%', width: '50vw', backgroundColor: 'lightblue'}} className="d-flex flex-column justify-content-center align-items-center">
-                  <div style={{height: '50%', width: '35vw'}} className="d-flex flex-column justify-content-around"> 
-                      <div>
-                        <h1 style={{color: 'white', textShadow: '2px 2px #ebebe0'}} className="display-4 fw-bolder">YOLO Trader</h1>
-                        <h3 style={{color: 'white'}} className="fw-bolder">You Only Live Once! Invest your money!</h3>
+            <div style={{height: '100%', backgroundColor: '#434756'}} className="d-flex flex-row justify-content-between align-items-center">
+              <div style={{height: '35vh', width: '50vw'}} className="d-flex flex-column justify-content-center align-items-center">
+                  <div style={{height: '100%', width: '40vw'}} className="d-flex flex-column justify-content-around"> 
+                      <div style={{color: 'white'}}>
+                        <h1 className="display-4 fw-bolder">YOLO Trader</h1>
+                        <h3 className="fw-bolder mb-5 ml-2">You Only Live Once! If rich, once is enough.</h3>
                       </div>
                       <div style={{width: '20vw', listStyleType: 'none'}} className="d-flex flex-row justify-content-between align-items-center">
-                        <li style={{
+                        {/* <li style={{
                             textAlign: 'center',
                             width: '6vw',
                             height: '8vh',
@@ -126,13 +126,15 @@ export default class Home extends Component {
                             margin: '17px',
                         }}>
                           <Link to='/login'>Login</Link>
-                        </li>
+                        </li> */}
+                        <button className="btn btn-light mt-3 ml-2" style={{backgroundColor: '#9b9fb0', width: '8vw', height: '5vh'}}><Link to='/signup'><strong style={{color: "white"}}>Signup</strong></Link></button>
+                        <button className="btn btn-light mt-3 ml-2" style={{backgroundColor: '#9b9fb0', width: '8vw', height: '5vh'}} ><Link to='/login'><strong style={{color: "white"}}>Login</strong></Link></button>
                       </div>
                   </div>
               </div>
-              <div style={{height: '100%', width: '50vw', backgroundColor: 'lightgrey'}} className="d-flex flex-column justify-content-center align-items-center">
+              <div style={{height: '100vh', width: '50vw', backgroundColor: '#9b9fb0'}} className="d-flex flex-column justify-content-center align-items-center">
                 <div  className="text-center">
-                  <img className="mx-auto" style={{height: '80%', width: '40vw'}} src="https://images.unsplash.com/photo-1612010167102-d1e8f83833e1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" class="img-fluid" alt="..."></img>
+                  <img className="mx-auto" style={{height: '80vh', width: '40vw'}} src="https://images.unsplash.com/photo-1612010167102-d1e8f83833e1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" class="img-fluid" alt="..."></img>
                 </div>
               </div>
             </div>
