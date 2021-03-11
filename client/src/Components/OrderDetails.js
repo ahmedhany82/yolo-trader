@@ -59,13 +59,13 @@ export default class OrderDetails extends Component {
       if(this.props.flag) {
       return (
         // <div style={{width: '23vw'}} className="ml-5 mt-3 border p-3 border-primary shadow p-3 mb-5 bg-body rounded">
-        <div style={{width: '25vw'}} className="ml-5 mr-5 mt-3 border p-3 border-primary shadow mb-5 bg-body rounded">
+        <div style={{width: '25vw'}} className="ml-5 mr-5 mt-3 border p-3 border-white shadow mb-5 bg-body rounded">
           <div className="d-flex flex-row justify-content-between align-items-start">
             
-            <h3 className="mt-3 mb-4">Place an order</h3>
-            <button type="button" onClick={this.closeMenue} className="btn-close mt-3" aria-label="Close">X</button>
+            <h3 style={{color: 'white'}}className="mt-3 mb-4">Place an order</h3>
+            <button type="button" onClick={this.closeMenue} style={{backgroundColor: "#434756"}}className="btn-close " aria-label="Close">X</button>
           </div>         
-          <form onSubmit={this.handleOrder} style={{width:'100%', marginBottom: '50px'}}>
+          <form onSubmit={this.handleOrder} style={{color: 'white', width:'100%', marginBottom: '50px'}}>
                     <div className="form-group">
                         <label htmlFor="limit">Limit</label>
                         <input className="form-control" style={{width:'90%', height: '25px', marginBottom: '20px'}}
@@ -98,11 +98,13 @@ export default class OrderDetails extends Component {
                         name="amount"
                         id="amount"
                         placeholder="Amount ($)"
-                        value={this.state.limit * this.state.number || 0} 
+                        value={ (this.state.limit * this.state.number).toFixed(2) || 0} 
                         disabled/>
-                    </div>                    
-                    <button type="submit" className="btn btn-primary mt-3">Place order</button>
-                    {this.state.message && (<h3>{this.state.message}</h3>)}                                                                                      
+                    </div>
+                    <div className="d-flex flex-row justify-content-center">
+                      <button style={{backgroundColor: 'lightgray'}} type="submit" className="btn btn-light mt-3">Place order</button>
+                    </div>
+                    {this.state.message && (<h5 className="mt-4">{this.state.message}</h5>)}                                                                               
                 </form>
         </div>
       )  

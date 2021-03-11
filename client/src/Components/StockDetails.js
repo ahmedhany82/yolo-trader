@@ -102,7 +102,7 @@ export default class StockDetails extends Component {
                 datasets: [
                     {
                         label: "",
-                        backgroundColor: 'rgb(173,216,230)',
+                        backgroundColor: 'grey', //'rgb(173,216,230)',
                         borderColor: 'rgb(230,230,250)',
                         data: data
                     }
@@ -115,6 +115,9 @@ export default class StockDetails extends Component {
                 },
                 legend: {
                   display: false,
+                  labels: {
+                    fontColor: 'white'
+                  }
                 },
                 responsive: true,
                 maintainAspectRatio: false,
@@ -127,7 +130,11 @@ export default class StockDetails extends Component {
                   }],
                   yAxes: [{
                     ticks: {
-                     suggestedMax: maxYValue+(0.1*maxYValue)
+                     suggestedMax: maxYValue+(0.1*maxYValue),
+                     fontColor: "white",
+                     },
+                     gridLines: {
+                       color: 'white'
                      }
                    }]
               }
@@ -170,28 +177,30 @@ export default class StockDetails extends Component {
 
 
   render() {
+    let absoluteChange = Math.abs(this.state.change);
     return (
-       <div>
+       <div style={{height: '100vh', backgroundColor: '#434756'}}>
           <div className="d-flex flex-row">
               <div>
-                  <div className="d-flex flex-row" >
+                  <div className="d-flex flex-row mt-3" >
                     <div className="ml-5">
-                      <h3 style={{marginBottom: '0px', paddingTop: '15px'}}>{this.state.ticker}</h3>
+                      <h3 style={{marginBottom: '0px', paddingTop: '15px', color: 'white'}}>{this.state.ticker}</h3>
                       <p style={{color:'grey', paddingLeft: "4px", marginBottom: '0px'}}>{this.state.companyName}</p>
                     </div>
                     <div style={{width: '32vw', height: '10vh'}} className="d-flex flex-row justify-content-between align-items-center ml-5">
-                      <h1>${this.state.latestPrice}</h1>
+                      <h1 style={{color: 'white'}}>${this.state.latestPrice}</h1>
                       {/* <h1>${this.state.lastPrice}</h1> */}
                       <div className="d-flex flex-row" style={{width: '21vw'}}>
-                        <h4 style={(this.state.change < 0)? {color: 'red', marginRight: '5px'}: {color: 'green', marginRight: '5px'}}>{this.state.change}</h4>
-                        <h4 style={(this.state.changePercent < 0)? {color: 'red'}: {color: 'green'}} >({this.state.changePercent}%)</h4>
+                        {/* <h4 style={(this.state.change < 0)? {color: '#ff0000', marginRight: '5px'}: {color: '#00ff00', marginRight: '5px'}}>{this.state.change}</h4> */}
+                        <h4 style={(this.state.change < 0)? {color: '#ff0000', marginRight: '5px'}: {color: '#00ff00', marginRight: '5px'}}>{this.state.change > 0? '+': '-'}{absoluteChange}</h4>
+                        <h4 style={(this.state.changePercent < 0)? {color: '#ff0000'}: {color: '#00ff00'}} >({this.state.changePercent}%)</h4>
                       </div>
                     </div>
                     
                   </div>
-                  <div style={{width: "70vw"}}>
+                  <div style={{width: "70vw"}} className="ml-1">
                     <div className="d-flex justify-content-end">
-                      <div style={{width: "15vw"}} className="btn-group me-2" role="group" aria-label="Second group">
+                      <div style={{width: "15vw"}} className="btn-group me-2 mb-1" role="group" aria-label="Second group">
                           <button onClick={this.handleChartChange} name="1d" type="button" className="btn btn-secondary">1D</button>
                           <button onClick={this.handleChartChange} name="1m" type="button" className="btn btn-secondary">1M</button>
                           <button onClick={this.handleChartChange} name="ytd" type="button" className="btn btn-secondary">YTD</button>
@@ -210,10 +219,10 @@ export default class StockDetails extends Component {
                         ytdChange = {this.state.ytdChange}/>
                   </div>
               </div>
-              <div style={{maxWidth: "30vw"}} className="mt-3 d-flex flex-column justify-content-start align-items-center">
+              <div style={{width: "28vw"}} className="mt-4 d-flex flex-column justify-content-start align-items-center">
                 <div>
-                  <button onClick={this.handleOrder} style={{width: "8vw"}} name="buy" type="button" className="btn btn-success btn-lg mr-2">Buy</button>
-                  <button onClick={this.handleOrder} style={{width: "8vw"}} name="sell" type="button" className="btn btn-danger btn-lg">Sell</button>
+                  <button onClick={this.handleOrder} style={{width: "8vw", backgroundColor: '#3bb300', color: 'white'}} name="buy" type="button" className="btn btn-success btn-lg mr-2">Buy</button>
+                  <button onClick={this.handleOrder} style={{width: "8vw", backgroundColor: '#e60000', color: 'white'}} name="sell" type="button" className="btn btn-danger btn-lg"><strong>Sell</strong> </button>
                 </div>
                 <OrderDetails flag={this.state.displayOrderComponent} orderType={this.state.orderType} user={this.props.user} ticker={this.state.ticker} callback={this.handleClose}/>
                 <News ticker={this.state.ticker} flag={!this.state.displayOrderComponent}/>

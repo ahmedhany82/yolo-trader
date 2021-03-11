@@ -95,9 +95,9 @@ export default class Home extends Component {
             </div>            
           </div>
         ) : (
-            <div style={{height: '100vh'}} className="d-flex flex-row justify-content-between align-items-center">
-              <div style={{height: '100vh', width: '50vw', backgroundColor: 'lightblue'}} className="d-flex flex-column justify-content-center align-items-center">
-                  <div style={{height: '50vh', width: '35vw'}} className="d-flex flex-column justify-content-around"> 
+            <div style={{height: '100%'}} className="d-flex flex-row justify-content-between align-items-center">
+              <div style={{height: '100%', width: '50vw', backgroundColor: 'lightblue'}} className="d-flex flex-column justify-content-center align-items-center">
+                  <div style={{height: '50%', width: '35vw'}} className="d-flex flex-column justify-content-around"> 
                       <div>
                         <h1 style={{color: 'white', textShadow: '2px 2px #ebebe0'}} className="display-4 fw-bolder">YOLO Trader</h1>
                         <h3 style={{color: 'white'}} className="fw-bolder">You Only Live Once! Invest your money!</h3>
@@ -130,9 +130,9 @@ export default class Home extends Component {
                       </div>
                   </div>
               </div>
-              <div style={{height: '100vh', width: '50vw', backgroundColor: 'lightgrey'}} className="d-flex flex-column justify-content-center align-items-center">
+              <div style={{height: '100%', width: '50vw', backgroundColor: 'lightgrey'}} className="d-flex flex-column justify-content-center align-items-center">
                 <div  className="text-center">
-                  <img className="mx-auto" style={{height: '80vh', width: '40vw'}} src="https://images.unsplash.com/photo-1612010167102-d1e8f83833e1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" class="img-fluid" alt="..."></img>
+                  <img className="mx-auto" style={{height: '80%', width: '40vw'}} src="https://images.unsplash.com/photo-1612010167102-d1e8f83833e1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" class="img-fluid" alt="..."></img>
                 </div>
               </div>
             </div>

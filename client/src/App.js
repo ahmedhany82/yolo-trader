@@ -21,7 +21,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{minHeight: '100%'}}>
         <Navbar user={this.state.user} setUser={this.setUser} />
         <Switch>
           <Route exact path='/' render={props => <Home user={this.state.user} {...props} />} />
