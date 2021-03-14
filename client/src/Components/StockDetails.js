@@ -36,7 +36,6 @@ export default class StockDetails extends Component {
 
   componentDidMount() {
 
-    // this.state.myChartRef = this.chartRef.current.getContext("2d");
     this.setState({
       myChartRef: this.chartRef.current.getContext("2d")
     })
@@ -88,7 +87,7 @@ export default class StockDetails extends Component {
           return element.close;
         })
         this.setState({
-          data: prices, /* The axis should depend on 52-week high */
+          data: prices,
           labels: dates, 
         }, () => {
           const { data, labels } = this.state;
@@ -102,7 +101,7 @@ export default class StockDetails extends Component {
                 datasets: [
                     {
                         label: "",
-                        backgroundColor: 'grey', //'rgb(173,216,230)',
+                        backgroundColor: 'grey',
                         borderColor: 'rgb(230,230,250)',
                         data: data
                     }
@@ -191,7 +190,6 @@ export default class StockDetails extends Component {
                       <h1 style={{color: 'white'}}>${this.state.latestPrice}</h1>
                       {/* <h1>${this.state.lastPrice}</h1> */}
                       <div className="d-flex flex-row" style={{width: '21vw'}}>
-                        {/* <h4 style={(this.state.change < 0)? {color: '#ff0000', marginRight: '5px'}: {color: '#00ff00', marginRight: '5px'}}>{this.state.change}</h4> */}
                         <h4 style={(this.state.change < 0)? {color: '#ff0000', marginRight: '5px'}: {color: '#00ff00', marginRight: '5px'}}>{this.state.change > 0? '+': '-'}{absoluteChange}</h4>
                         <h4 style={(this.state.changePercent < 0)? {color: '#ff0000'}: {color: '#00ff00'}} >({this.state.changePercent}%)</h4>
                       </div>

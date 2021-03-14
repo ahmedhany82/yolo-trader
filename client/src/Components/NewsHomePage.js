@@ -38,26 +38,6 @@ export default class NewsHomePage extends Component {
         }  
     }
 
-    // componentDidMount() {      
-    //   if(this.props.user) {
-    //       getPortfolio(this.props.user._id).then(portfoliofromDB => {
-    //         const symbols = portfoliofromDB.map(element => {
-    //           return element.ticker;
-    //         })
-    //         const ticker = symbols[Math.floor(Math.random() * symbols.length)]
-    //         axios.get(`https://finnhub.io/api/v1/company-news?symbol=${ticker}&from=2021-03-08&to=2021-03-09&token=${process.env.REACT_APP_FINNHUB_KEY}`, { json: true }).then(res => {
-    //             this.setState({
-    //               news: res.data.slice(0,2)
-    //             })
-    //           }).catch(err => {
-    //             console.log("Error while fetching the news from API", err);
-    //           });
-    //       }).catch(err => {
-    //         console.log(err);
-    //       })
-    //     }
-    // }
-
   render() {
       if(this.state.news.length === 0) {
         return <div style={{height: "35vh"}} className="d-flex justify-content-center align-items-center">
@@ -69,12 +49,10 @@ export default class NewsHomePage extends Component {
       let newsList = this.state.news.map((article,index) => {
         return (
           <div key={index}>
-              {/* <div style={{maxWidth: '30vw'}} className="d-flex flex-row justify-content-start"> */}
               <div style={{Width: '30vw'}} className="d-flex flex-row justify-content-start">
                   <img style={{height: "8vh", width: "8vw"}} className=" mr-2" src={article.image} alt=""/>
                   <div className="d-flex flex-column justify-content-center align-self-center">
                       <a href={article.url} target="_blank" rel="noreferrer"><h5 style={{color: 'lightblue'}}>{article.headline}</h5></a>
-                      {/* <p>{article.source}</p> */}
                       <span style={{
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",

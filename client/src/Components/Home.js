@@ -103,30 +103,6 @@ export default class Home extends Component {
                         <h3 className="fw-bolder mb-5 ml-2">You Only Live Once! If rich, once is enough.</h3>
                       </div>
                       <div style={{width: '20vw', listStyleType: 'none'}} className="d-flex flex-row justify-content-between align-items-center">
-                        {/* <li style={{
-                            textAlign: 'center',
-                            width: '6vw',
-                            height: '8vh',
-                            backgroundColor: 'rgb(203 235 232 / 94%)',
-                            borderRadius: '25px',
-                            flexDirection: 'column',
-                            padding: '20px',
-                            margin: '17px',
-                        }}>
-                          <Link to='/signup'>Signup</Link>
-                        </li>
-                        <li style={{
-                            textAlign: 'center',
-                            width: '6vw',
-                            height: '8vh',
-                            backgroundColor: 'rgb(203 235 232 / 94%)',
-                            borderRadius: '25px',
-                            flexDirection: 'column',
-                            padding: '20px',
-                            margin: '17px',
-                        }}>
-                          <Link to='/login'>Login</Link>
-                        </li> */}
                         <button className="btn btn-light mt-3 ml-2" style={{backgroundColor: '#9b9fb0', width: '8vw', height: '5vh'}}><Link to='/signup'><strong style={{color: "white"}}>Signup</strong></Link></button>
                         <button className="btn btn-light mt-3 ml-2" style={{backgroundColor: '#9b9fb0', width: '8vw', height: '5vh'}} ><Link to='/login'><strong style={{color: "white"}}>Login</strong></Link></button>
                       </div>

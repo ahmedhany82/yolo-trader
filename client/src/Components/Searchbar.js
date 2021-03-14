@@ -21,25 +21,11 @@ export default class Searchbar extends React.Component {
     }).catch(err => {
         console.log(err)
     })
-    // console.log(process.env.ALPHAVANTAGE_KEY)
-    // axios.get(`https://finnhub.io/api/v1/search?q=${query}&token=${process.env.FINNHUB_KEY}`, { json: true },).then((err, res, body) => {
-    //   if (err) { return console.log(err); }
-    //   console.log(body.url);
-    //   console.log(body.explanation);
-    // })
   }
 
 
   render() {
-      // let tickersList = this.state.tickers.map(ticker => {
-      //   return (
-      //     <div>
-      //       <Link to={`/symbols/${ticker['1. symbol']}`} ><p>{ticker['1. symbol']}</p></Link>
-      //       {/* <p>{ticker['1. symbol']}</p> */}
-      //       <p style={{color: "grey"}}>{ticker['2. name']}</p>
-      //     </div>
-      //   )
-      // })  
+
     return (
       <div>
         <form style={{width:'100%', marginBottom: '50px'}} autoComplete="off">
@@ -56,10 +42,6 @@ export default class Searchbar extends React.Component {
               <SearchResults tickers={this.state.tickers}/>
           </div>
         </form>
-        
-          {/* <div>
-              {tickersList}
-          </div> */}
     </div>
     )
 

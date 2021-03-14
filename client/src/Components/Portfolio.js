@@ -23,7 +23,6 @@ export default class Portfolio extends Component {
       let profitloss = (((value - (element.count * element.averagePrice))/(element.count * element.averagePrice)) *100).toFixed(2) ;
       return (
         <tr key={index}>
-          {/* <th scope="row">{element.ticker}</th> */}
           <th scope="row"><Link to={`/symbols/${element.ticker}`}><p style={{color: 'white'}} className="fw-bolder">{element.ticker}</p></Link></th>
           <td style={{color: 'white'}}>{element.count}</td>
           <td style={{color: 'white'}}>{this.props.symbolsPrice[element.ticker]}</td>

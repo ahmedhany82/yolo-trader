@@ -20,7 +20,6 @@ export default class MostActive extends Component {
 
   render() {
     if(this.state.mostactive.length === 0) {
-      // return <h1>Loading...</h1>
       return <div style={{height: "35vh"}} className="d-flex justify-content-center align-items-center">
         <div className="spinner-border text-info" role="status">
           <span className="sr-only">Loading...</span>

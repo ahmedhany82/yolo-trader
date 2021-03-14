@@ -28,9 +28,6 @@ export default class Login extends Component {
             password: ''
           })
         } else {
-          // the response from the server is a user object -> signup was successful
-          // we want to put the user object in the state of App.js
-          console.log(user)
           this.props.setUser(user);
           this.props.history.push('/');
         }
@@ -38,31 +35,6 @@ export default class Login extends Component {
   }
   render() {
     return (
-      // <div>
-      //   <h2>Login</h2>
-      //   <form onSubmit={this.handleSubmit}>
-      //     <label htmlFor="username">Username: </label>
-      //     <input
-      //       type="text"
-      //       name="username"
-      //       value={this.state.username}
-      //       onChange={this.handleChange}
-      //       id="username"
-      //     />
-      //     <label htmlFor="password">Password: </label>
-      //     <input
-      //       type="password"
-      //       name="password"
-      //       value={this.state.password}
-      //       onChange={this.handleChange}
-      //       id="password"
-      //     />
-      //     <button type="submit">Log in</button>
-      //     {this.state.message && (
-      //       <h3>{this.state.message}</h3>
-      //     )}
-      //   </form>
-      // </div>
       <div style={{backgroundColor: '#434756', height: "100vh"}} className="d-flex flex-column justify-content-center align-items-center">
         <div style={{height: '42vh', weight: '30vw'}} className="d-flex flex-column justify-content-between">
         <h2 style={{color: 'white'}}>Login</h2>

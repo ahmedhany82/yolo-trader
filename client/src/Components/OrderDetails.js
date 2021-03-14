@@ -33,20 +33,7 @@ export default class OrderDetails extends Component {
       })
     }).catch(err => {
       console.log(err);
-    });
-    //   .then(user => {
-    //     if (user.message) {
-    //       this.setState({
-    //         message: user.message,
-    //         username: '',
-    //         password: ''
-    //       })
-    //     } else {
-    //       console.log(user)
-    //       this.props.setUser(user);
-    //       this.props.history.push('/');
-    //     }
-    //   })    
+    }); 
   }
 
   closeMenue = event => {
@@ -54,11 +41,9 @@ export default class OrderDetails extends Component {
   }
 
   render() {
-    // if(this.props.flag) {
-      
+     
       if(this.props.flag) {
       return (
-        // <div style={{width: '23vw'}} className="ml-5 mt-3 border p-3 border-primary shadow p-3 mb-5 bg-body rounded">
         <div style={{width: '25vw'}} className="ml-5 mr-5 mt-3 border p-3 border-white shadow mb-5 bg-body rounded">
           <div className="d-flex flex-row justify-content-between align-items-start">
             

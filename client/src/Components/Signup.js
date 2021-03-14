@@ -28,9 +28,6 @@ export default class Signup extends Component {
             password: ''
           })
         } else {
-          // the response from the server is a user object -> signup was successful
-          // we want to put the user object in the state of App.js
-          console.log(user)
           this.props.setUser(user);
           this.props.history.push('/');
         }
