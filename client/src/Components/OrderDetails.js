@@ -62,7 +62,7 @@ export default class OrderDetails extends Component {
                         value={this.state.limit}
                         min="0"
                         onChange={this.handleFormInput}
-                        />
+                        required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="number">Number</label>
@@ -74,7 +74,7 @@ export default class OrderDetails extends Component {
                         value={this.state.number}
                         min="0"
                         onChange={this.handleFormInput}
-                        />
+                        required/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="amount">Amount</label>
