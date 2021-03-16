@@ -32,7 +32,6 @@ export default class PieChart extends Component {
         let b = Math.floor(Math.random() * 200);
         return('rgb(' + r + ', ' + g + ', ' + b + ')')
       })
-      console.log(colorsArray)
 
       this.state.myChart = new Chart(this.state.myChartRef, {
         type: "doughnut",
