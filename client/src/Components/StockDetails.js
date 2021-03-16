@@ -25,8 +25,6 @@ export default class StockDetails extends Component {
     previousClose: undefined,
     week52High: undefined,
     week52Low: undefined,
-    labels: [],
-    data: [],
     chartRange: 'ytd',
     // lastPrice: undefined, //this is last trade use https://finnhub.io/api/v1/quote?symbol=SPCE&token= for closing price
     // socket: new WebSocket(`wss://ws.finnhub.io?token=${process.env.REACT_APP_FINNHUB_KEY}`),
